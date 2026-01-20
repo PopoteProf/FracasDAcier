@@ -2553,7 +2553,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947874773}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 1.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -2628,7 +2628,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -2799,7 +2799,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3558,26 +3558,35 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 1
-          inSlope: -1.0000001
-          outSlope: -1.0000001
+          inSlope: -0.28040466
+          outSlope: -0.28040466
           tangentMode: 34
           weightedMode: 0
           inWeight: 0
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.56786954
-          value: 0.4321304
-          inSlope: -1
-          outSlope: -1
-          tangentMode: 34
+          time: 0.42609745
+          value: 0.8805203
+          inSlope: -0.6093109
+          outSlope: -0.6093109
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33460087
+          outWeight: 0.092053406
+        - serializedVersion: 3
+          time: 0.6871221
+          value: 0.32955337
+          inSlope: -3.4379148
+          outSlope: -3.4379148
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1
+          time: 0.8582512
           value: 0
-          inSlope: -0.9999999
-          outSlope: -0.9999999
+          inSlope: -1.9257587
+          outSlope: -1.9257587
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
@@ -7344,7 +7353,7 @@ Transform:
   m_GameObject: {fileID: 947874773}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 12.07, y: 0.166, z: 9.574}
+  m_LocalPosition: {x: -0.5600004, y: 0.166, z: 4.514001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21944,7 +21953,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4059080785490165492, guid: 18a400797fa807041b2e782cb0efdcf1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.03
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4059080785490165492, guid: 18a400797fa807041b2e782cb0efdcf1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21952,7 +21961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4059080785490165492, guid: 18a400797fa807041b2e782cb0efdcf1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.63
+      value: 4.57
       objectReference: {fileID: 0}
     - target: {fileID: 4059080785490165492, guid: 18a400797fa807041b2e782cb0efdcf1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22105,5 +22114,5 @@ SceneRoots:
   - {fileID: 372035182}
   - {fileID: 1534687387}
   - {fileID: 9333434}
-  - {fileID: 971434739}
   - {fileID: 947874776}
+  - {fileID: 971434739}
