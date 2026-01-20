@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2191882510768157973}
   - component: {fileID: 9047865846359243663}
   - component: {fileID: 4224040679674109150}
-  - component: {fileID: 8387694459096447472}
   - component: {fileID: 6663564425951710872}
   m_Layer: 7
   m_Name: SlimeParticle
@@ -29,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1170124548351371045}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.384575, y: -6.481936, z: 6.5462637}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -91,27 +90,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8387694459096447472
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1170124548351371045}
-  m_Material: {fileID: 13400000, guid: 6a63e71bd405e704c898f176ab249bd1, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0.00000023841858, y: 0, z: 0}
 --- !u!114 &6663564425951710872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlimeCollider
   _canGlue: 1
-  _timeBeforGlue: 1
+  _isGlue: 0
+  _timeBeforGlue: 0
   radius: 0.5
   wallLayer:
     serializedVersion: 2

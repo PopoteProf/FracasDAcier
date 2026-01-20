@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour {
     [SerializeField] protected int _damage;
     [SerializeField] protected GameObject _prfDeath;
     protected Vector3 _lastPos;
-
+    
     public virtual void SetUpProjectile(int damage, Vector3 force) 
     {
         _lastPos = transform.position;
