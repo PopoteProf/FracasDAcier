@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6663564425951710872}
   m_Layer: 7
   m_Name: SlimeParticle
-  m_TagString: Untagged
+  m_TagString: SlimeBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
