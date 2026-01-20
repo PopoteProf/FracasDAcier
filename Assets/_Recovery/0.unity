@@ -11125,14 +11125,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3318989171119061372}
     m_Modifications:
-    - target: {fileID: 2163766841680201430, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
-      propertyPath: _usPreFireDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2163766841680201430, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
-      propertyPath: _damgeTickPerSecond
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 5166468267581685801, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -12296,6 +12288,10 @@ PrefabInstance:
     - target: {fileID: 4521795608043737881, guid: 995d8a3c251c8e24688675df6042c236, type: 3}
       propertyPath: _fireRate
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521795608043737881, guid: 995d8a3c251c8e24688675df6042c236, type: 3}
+      propertyPath: _projectileSpeed
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 7418620970074422167, guid: 995d8a3c251c8e24688675df6042c236, type: 3}
       propertyPath: m_LocalPosition.x
