@@ -11125,14 +11125,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3318989171119061372}
     m_Modifications:
-    - target: {fileID: 2163766841680201430, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
-      propertyPath: _usPreFireDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2163766841680201430, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
-      propertyPath: _damgeTickPerSecond
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 5166468267581685801, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11814,6 +11806,10 @@ PrefabInstance:
       propertyPath: _footTarget
       value: 
       objectReference: {fileID: 1126350152}
+    - target: {fileID: 7086328612769205226, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
+      propertyPath: _usSpawnVFXAtFeet
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7086328612769205226, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
       propertyPath: _groundLayer.m_Bits
       value: 64
