@@ -15,21 +15,23 @@ public class Projectile : MonoBehaviour {
 
     protected virtual void Update() {
         RaycastHit hit;
-        if (Physics.Raycast(new Ray(_lastPos, transform.position - _lastPos), out hit,
-                (transform.position - _lastPos).magnitude)){
+        
+        if (Physics.Raycast(new Ray(_lastPos, transform.position - _lastPos), out hit, (transform.position - _lastPos).magnitude))
+        {
             Impact(hit);
         }
+        _lastPos = transform.position;
         transform.forward = _rb.linearVelocity.normalized;
     }
 
     protected virtual void Impact(RaycastHit hit)
     {
-        
-        if (hit.transform.GetComponent<IDamagable>() != null) {
+        if (hit.transform.GetComponent<IDamagable>() != null) 
+        {
             hit.transform.GetComponent<IDamagable>().TakeDamage(_damage, hit.point, transform.position - _lastPos);
+            GameObject go = Instantiate(_prfDeath, transform.position, Quaternion.identity);
+            go.transform.up = hit.normal;
         }
-        GameObject go = Instantiate(_prfDeath, transform.position, Quaternion.identity);
-        go.transform.up = hit.normal;
         Destroy(gameObject);
     }
 }
