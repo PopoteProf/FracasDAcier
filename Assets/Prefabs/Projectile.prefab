@@ -226,6 +226,10 @@ MonoBehaviour:
   _rb: {fileID: 6991815639616483751}
   _damage: 0
   _prfDeath: {fileID: 9149080009090224474, guid: 0f991d988079ee242bdc05ffae0449ee, type: 3}
+  CanBeGlued: 0
+  _hitmask:
+    serializedVersion: 2
+    m_Bits: 87
 --- !u!54 &6991815639616483751
 Rigidbody:
   m_ObjectHideFlags: 0
