@@ -5,7 +5,8 @@ public class Projectile : MonoBehaviour {
     [SerializeField] protected int _damage;
     [SerializeField] protected GameObject _prfDeath;
     protected Vector3 _lastPos;
-
+    public LayerMask _hitmask ;
+    private Vector3 HitPoint;
     public virtual void SetUpProjectile(int damage, Vector3 force) 
     {
         _lastPos = transform.position;
@@ -15,10 +16,11 @@ public class Projectile : MonoBehaviour {
 
     protected virtual void Update() {
         RaycastHit hit;
-        if (Physics.Raycast(new Ray(_lastPos, transform.position - _lastPos), out hit,
-                (transform.position - _lastPos).magnitude)){
-            Impact(hit);
+        if (Physics.Raycast(new Ray(_lastPos, transform.position - _lastPos), out hit, (transform.position - _lastPos).magnitude)){
+            
+           Impact(hit);
         }
+        _lastPos = transform.position;
         transform.forward = _rb.linearVelocity.normalized;
     }
 
@@ -30,6 +32,7 @@ public class Projectile : MonoBehaviour {
         }
         GameObject go = Instantiate(_prfDeath, transform.position, Quaternion.identity);
         go.transform.up = hit.normal;
+       
         Destroy(gameObject);
     }
 }
