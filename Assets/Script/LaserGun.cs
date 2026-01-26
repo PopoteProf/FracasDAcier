@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class LaserGun : Weapon
 {
@@ -16,6 +17,13 @@ public class LaserGun : Weapon
     private bool _isFire;
     private PopoteTimer _preFireTimer;
     private PopoteTimer _damageTickTimer;
+    
+    //VFX
+    [SerializeField] private Transform _muzzlePivot;
+    private GameObject _muzzleInstance;
+    private VisualEffect _muzzleVFX;
+    private static readonly int IsFiringID = Shader.PropertyToID("IsFiring");
+
 
     private void Awake()
     {
@@ -23,8 +31,22 @@ public class LaserGun : Weapon
         _preFireTimer.OnTimerEnd+= OnPreFireTimerEnd;
         _damageTickTimer = new PopoteTimer(1/_damgeTickPerSecond);
         _damageTickTimer.OnTimerEnd += OnDamageTickTimerEnd;
+        
+        SetupMuzzleVFX();
     }
 
+    private void SetupMuzzleVFX()
+    {
+        if (_prfMuzzleFire != null)
+        {
+            _muzzleInstance = Instantiate(_prfMuzzleFire, _muzzlePivot.position, _muzzlePivot.rotation, _muzzlePivot);
+            _muzzleVFX = _muzzleInstance.GetComponent<VisualEffect>();
+            if (_muzzleVFX != null)
+            {
+                _muzzleVFX.SetBool(IsFiringID, false);
+            }
+        }
+    }
     private void OnDamageTickTimerEnd(object sender, EventArgs e) {
         DoDamage();
     }
@@ -60,7 +82,7 @@ public class LaserGun : Weapon
 
     private void DoFire()
     {
-        if (_prfMuzzleFire != null) Instantiate(_prfMuzzleFire, _firePoint.position,_firePoint.rotation);
+        StartMuzzleVFX();
         if( _fireImpulseSource!=null)_fireImpulseSource.GenerateImpulse();
         if( _prfFireImpact){ 
             GameObject go = Instantiate(_prfFireImpact, hit.point, Quaternion.identity);
@@ -96,5 +118,17 @@ public class LaserGun : Weapon
         _aimLineRenderer.endColor = _defaultLazerColor;
         _preFireTimer.Pause();
         _damageTickTimer.Pause();
+        StopMuzzleVFX();
+    }
+    
+    private void StartMuzzleVFX()
+    {
+        if (_muzzleVFX != null)
+            _muzzleVFX.SetBool(IsFiringID, true);
+    }
+    private void StopMuzzleVFX()
+    {
+        if (_muzzleVFX != null)
+            _muzzleVFX.SetBool(IsFiringID, false);
     }
 }
