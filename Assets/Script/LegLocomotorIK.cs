@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class LegLocomotorIK : MonoBehaviour {
     
@@ -23,6 +24,7 @@ public class LegLocomotorIK : MonoBehaviour {
 
     [SerializeField] private CinemachineImpulseSource _impulseSource;
     [SerializeField] private ParticleSystem _particleSystemFootStep;
+    [SerializeField] private VisualEffect _visualEffect;
 
     [SerializeField] private bool _DrawDebug;
 
@@ -101,6 +103,7 @@ public class LegLocomotorIK : MonoBehaviour {
         OnLegEndMouvement?.Invoke(this, EventArgs.Empty);
         if( _impulseSource)_impulseSource.GenerateImpulse();
         if (_particleSystemFootStep) _particleSystemFootStep.Play();
+        if (_visualEffect) _visualEffect.Play();
     }
 
     private void RayCasterPos() {
