@@ -106,6 +106,7 @@ MonoBehaviour:
   _rb: {fileID: 4274087522323982911}
   _damage: 0
   _prfDeath: {fileID: 9149080009090224474, guid: 0f991d988079ee242bdc05ffae0449ee, type: 3}
+  SizeSlimeBall: {x: 0.35, y: 0.35, z: 0.35}
   NumberSlime: 50
   SlimePrefab: {fileID: 1170124548351371045, guid: 93bb6c327fef87e4b9cd3deeacd4a90a, type: 3}
 --- !u!54 &4274087522323982911

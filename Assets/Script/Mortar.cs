@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Mortar : Weapon {
     [SerializeField, ColorUsage(true, true)] private Color _defaultLazerColor;
@@ -7,6 +8,7 @@ public class Mortar : Weapon {
     [SerializeField] private int _damage =4;
     [SerializeField] private Projectile _prfProjectile;
     [SerializeField] private float _projectileSpeed = 30;
+    [SerializeField] private VisualEffect _visualEffect;
     
     void Start() {
         _aimLineRenderer.startColor =_defaultLazerColor;
@@ -23,6 +25,7 @@ public class Mortar : Weapon {
         FireProjectile(this, null);
         _aimLineRenderer.startColor =_fireLazerColor;
         _aimLineRenderer.endColor =_fireLazerColor;
+        _visualEffect.Play();
     }
 
     public override void StopClick() {

@@ -15,13 +15,20 @@ public class Projectile : MonoBehaviour {
 
     protected virtual void Update() {
         RaycastHit hit;
+        if (transform.childCount <= 0)
+        {
+            Destroy(gameObject);
+        }
         
         if (Physics.Raycast(new Ray(_lastPos, transform.position - _lastPos), out hit, (transform.position - _lastPos).magnitude))
         {
             Impact(hit);
         }
+        
         _lastPos = transform.position;
         transform.forward = _rb.linearVelocity.normalized;
+        
+        Debug.Log(_rb.linearVelocity.normalized);
     }
 
     protected virtual void Impact(RaycastHit hit)
