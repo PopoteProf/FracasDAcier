@@ -32,6 +32,8 @@ public class RototController : MonoBehaviour, IDamagable
     RaycastHit hit;
     private InputAction _tabAction;
 
+    private Coroutine _selectWeapon;
+
     public void Start() {
         foreach (var weapon in _weapons) {
             weapon.ChangeSelection(false);
@@ -43,8 +45,10 @@ public class RototController : MonoBehaviour, IDamagable
 
     private void ManageWeaponSwitch(InputAction.CallbackContext obj) {
         Debug.Log("Switch gun");
-        if (_currenWeaponID+1>=_weapons.Length) StartCoroutine(SelectWeapon(0));
-        else StartCoroutine(SelectWeapon(_currenWeaponID + 1));
+        if (_selectWeapon != null) return;
+        
+        if (_currenWeaponID+1>=_weapons.Length) _selectWeapon = StartCoroutine(SelectWeapon(0));
+        else _selectWeapon = StartCoroutine(SelectWeapon(_currenWeaponID + 1));
     }
 
     void Update() {
@@ -122,6 +126,7 @@ public class RototController : MonoBehaviour, IDamagable
         }
         
         _firstChange = false;
+        _selectWeapon = null;
     }
 
    
