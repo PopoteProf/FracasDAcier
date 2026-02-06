@@ -7,6 +7,8 @@ public class Weapon : MonoBehaviour
     [SerializeField]protected LineRenderer _aimLineRenderer;
     [SerializeField]protected CinemachineImpulseSource _fireImpulseSource;
     [SerializeField]protected GameObject _prfMuzzleFire;
+    [SerializeField]protected Transform[] _visualTransforms;
+    
 
     protected RaycastHit hit;
     protected bool _isEquipe;
@@ -36,5 +38,9 @@ public class Weapon : MonoBehaviour
         _isEquipe = isEquip;
         gameObject.SetActive(isEquip);
         StopClick();
+    }
+    
+    public Transform[] GetVisualTransforms() {
+        return _visualTransforms;
     }
 }

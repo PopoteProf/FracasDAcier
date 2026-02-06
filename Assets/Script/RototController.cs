@@ -1,7 +1,11 @@
 using System;
+using System.Collections;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.VFX;
+using UnityEngine.VFX.Utility;
 
 public class RototController : MonoBehaviour, IDamagable
 {
@@ -14,9 +18,10 @@ public class RototController : MonoBehaviour, IDamagable
     //[SerializeField] private Rigidbody[] _rbRagdolls;
     //[SerializeField] private Collider[] _colliders;
 
-    [Header("CannonParameters")] [SerializeField] private Transform _cannon;
-    
+    [Header("CannonParameters")]
+    [SerializeField] private Transform _cannon;
     [SerializeField] private Weapon[] _weapons;
+    [SerializeField] private VisualEffect[] _vfxChangeWeapons;
 
     private Weapon _currentWeapon;
     private int _currenWeaponID;
@@ -30,15 +35,15 @@ public class RototController : MonoBehaviour, IDamagable
         foreach (var weapon in _weapons) {
             weapon.ChangeSelection(false);
         }
-        SelectWeapon(0);
+        StartCoroutine(SelectWeapon(0));
         _tabAction =InputSystem.actions.FindAction("Tab");
         _tabAction.started += ManageWeaponSwitch;
     }
 
     private void ManageWeaponSwitch(InputAction.CallbackContext obj) {
         Debug.Log("Switch gun");
-        if (_currenWeaponID+1>=_weapons.Length) SelectWeapon(0);
-        else SelectWeapon(_currenWeaponID+1);
+        if (_currenWeaponID+1>=_weapons.Length) StartCoroutine(SelectWeapon(0));
+        else StartCoroutine(SelectWeapon(_currenWeaponID + 1));
     }
 
     void Update() {
@@ -71,13 +76,28 @@ public class RototController : MonoBehaviour, IDamagable
 
     
 
-    private void SelectWeapon(int id) {
+    private IEnumerator SelectWeapon(int id)
+    {
+        // VFX
+        for (int i = 0; i < _vfxChangeWeapons.Length; i++)
+        {
+            _vfxChangeWeapons[i].Play();
+        }
+        
+        
+        yield return new WaitForSeconds(2f);
         if (_currentWeapon != null) {
             _currentWeapon.ChangeSelection(false);
         }
         _currentWeapon = _weapons[id];
         _currenWeaponID = id;
         _currentWeapon.ChangeSelection(true);
+        
+        // VFX
+        for (int i = 0; i < _vfxChangeWeapons.Length; i++)
+        {
+            _vfxChangeWeapons[i].Stop();
+        }
     }
 
    
