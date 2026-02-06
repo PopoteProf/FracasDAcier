@@ -952,6 +952,74 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_MeshPartcleFragments
       objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[4].m_Value
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector2f.m_Array.Array.data[0].m_Value.x
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector2f.m_Array.Array.data[0].m_Value.y
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector2f.m_Array.Array.data[1].m_Value.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector2f.m_Array.Array.data[1].m_Value.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
+      value: 1.83799
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.y
+      value: 0.974
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.z
+      value: 0.53576
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[3].m_Value.x
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[3].m_Value.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[3].m_Value.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[4].m_Value.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[4].m_Value.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183290074070944167, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[4].m_Value.z
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 7633052981424061699, guid: 5b4e308b5a9b5764b9759a7cf96067ff, type: 3}
       propertyPath: Target
       value: 
