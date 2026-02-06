@@ -1,13 +1,17 @@
-﻿using Unity.Cinemachine;
+﻿using System.Collections.Generic;
+using DG.Tweening;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Weapon : MonoBehaviour
 {
+    [SerializeField]protected Vector3 _scale;
     [SerializeField]protected Transform _firePoint;
     [SerializeField]protected LineRenderer _aimLineRenderer;
     [SerializeField]protected CinemachineImpulseSource _fireImpulseSource;
     [SerializeField]protected GameObject _prfMuzzleFire;
-    [SerializeField]protected Transform[] _visualTransforms;
+    [SerializeField]protected List<VisualEffect> _visualEffects;
     
 
     protected RaycastHit hit;
@@ -36,11 +40,19 @@ public class Weapon : MonoBehaviour
 
     public  virtual void ChangeSelection(bool isEquip) {
         _isEquipe = isEquip;
-        gameObject.SetActive(isEquip);
+        if (isEquip)
+        {
+            gameObject.SetActive(isEquip);
+            transform.DOScale(_scale, 0.5f);
+        }
+        else
+        {
+            transform.DOScale(0f, 0.5f).OnComplete(() => {gameObject.SetActive(isEquip);});
+        }
         StopClick();
     }
     
-    public Transform[] GetVisualTransforms() {
-        return _visualTransforms;
+    public List<VisualEffect> GetVisualEffects() {
+        return _visualEffects;
     }
 }

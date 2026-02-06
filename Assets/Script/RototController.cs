@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,13 +22,13 @@ public class RototController : MonoBehaviour, IDamagable
     [Header("CannonParameters")]
     [SerializeField] private Transform _cannon;
     [SerializeField] private Weapon[] _weapons;
-    [SerializeField] private VisualEffect[] _vfxChangeWeapons;
 
     private Weapon _currentWeapon;
     private int _currenWeaponID;
     private bool _isFire;
 
-    private bool _isAlive=true;
+    private bool _isAlive = true;
+    private bool _firstChange = true;
     RaycastHit hit;
     private InputAction _tabAction;
 
@@ -79,13 +80,17 @@ public class RototController : MonoBehaviour, IDamagable
     private IEnumerator SelectWeapon(int id)
     {
         // VFX
-        for (int i = 0; i < _vfxChangeWeapons.Length; i++)
+        List<VisualEffect> currentWeaponEffects =  new List<VisualEffect>();
+        if (!_firstChange)
         {
-            _vfxChangeWeapons[i].Play();
+            currentWeaponEffects = _currentWeapon.GetVisualEffects();
+            for (int i = 0; i < currentWeaponEffects.Count; i++)
+            {
+                currentWeaponEffects[i].Play();
+            }
         }
         
-        
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         if (_currentWeapon != null) {
             _currentWeapon.ChangeSelection(false);
         }
@@ -94,10 +99,29 @@ public class RototController : MonoBehaviour, IDamagable
         _currentWeapon.ChangeSelection(true);
         
         // VFX
-        for (int i = 0; i < _vfxChangeWeapons.Length; i++)
+        List<VisualEffect> newWeaponeffects =  new List<VisualEffect>();
+        if (!_firstChange)
         {
-            _vfxChangeWeapons[i].Stop();
+            newWeaponeffects = _currentWeapon.GetVisualEffects();
+            // VFX
+            for (int i = 0; i < newWeaponeffects.Count; i++)
+            {
+                newWeaponeffects[i].Play();
+            }
         }
+        
+        yield return new WaitForSeconds(1f);
+        // VFX
+        for (int i = 0; i < currentWeaponEffects.Count; i++)
+        {
+            currentWeaponEffects[i].Stop();
+        }
+        for (int i = 0; i < newWeaponeffects.Count; i++)
+        {
+            newWeaponeffects[i].Stop();
+        }
+        
+        _firstChange = false;
     }
 
    
