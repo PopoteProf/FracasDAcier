@@ -13,7 +13,7 @@ namespace Script
         private Vector3 _scale;
         private Vector3 _lastPos;
         public float radius = 0.5f;
-        public LayerMask wallLayer;
+        public LayerMask layerIngnor;
 
         private void Start()
         {
@@ -31,7 +31,7 @@ namespace Script
             
             RaycastHit hit;
         
-            if (Physics.Raycast(new Ray(_lastPos, transform.position - _lastPos), out hit, (transform.position - _lastPos).magnitude))
+            if (Physics.Raycast(new Ray(_lastPos, transform.position - _lastPos), out hit, (transform.position - _lastPos).magnitude) && !hit.transform.gameObject.CompareTag("Player"))
             {
                 Impact(hit);
             }
