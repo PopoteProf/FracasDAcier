@@ -535,7 +535,7 @@ MonoBehaviour:
   _bodyrotationThreshold: 0.98
   _canonRotationThreshold: 0.97
   _hp: 5
-  _prfDeathGameObject: {fileID: 0}
+  _prfDeathGameObject: {fileID: 3365629395431632400, guid: 11f131dba353f444e811831bbae62c55, type: 3}
   _transformcannon1: {fileID: 2886321124921878175}
   _transformcannon2: {fileID: 3265183489580044414}
   _projectileDamage: 1
