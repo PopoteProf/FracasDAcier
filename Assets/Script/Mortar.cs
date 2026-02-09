@@ -8,7 +8,7 @@ public class Mortar : Weapon {
     [SerializeField] private int _damage =4;
     [SerializeField] private Projectile _prfProjectile;
     [SerializeField] private float _projectileSpeed = 30;
-    [SerializeField] private VisualEffect _visualEffect;
+    [SerializeField] private ParticleSystem _visualEffect;
     
     void Start() {
         _aimLineRenderer.startColor =_defaultLazerColor;

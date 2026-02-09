@@ -23,8 +23,7 @@ public class LegLocomotorIK : MonoBehaviour {
     [SerializeField] private Transform _footTarget;
 
     [SerializeField] private CinemachineImpulseSource _impulseSource;
-    [SerializeField] private ParticleSystem _particleSystemFootStep;
-    [SerializeField] private VisualEffect _visualEffect;
+    [SerializeField] private ParticleSystem _visualEffect;
 
     [SerializeField] private bool _DrawDebug;
 
@@ -102,8 +101,11 @@ public class LegLocomotorIK : MonoBehaviour {
         _footTarget.position = _newPos;
         OnLegEndMouvement?.Invoke(this, EventArgs.Empty);
         if( _impulseSource)_impulseSource.GenerateImpulse();
-        if (_particleSystemFootStep) _particleSystemFootStep.Play();
-        if (_visualEffect) _visualEffect.Play();
+        if (_visualEffect)
+        {
+            _visualEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            _visualEffect.Play();
+        }
     }
 
     private void RayCasterPos() {

@@ -28,7 +28,6 @@ public class Projectile : MonoBehaviour {
         _lastPos = transform.position;
         transform.forward = _rb.linearVelocity.normalized;
         
-        Debug.Log(_rb.linearVelocity.normalized);
     }
 
     protected virtual void Impact(RaycastHit hit)

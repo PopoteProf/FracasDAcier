@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.VFX;
 
 public class RototController : MonoBehaviour, IDamagable
 {
@@ -25,6 +26,9 @@ public class RototController : MonoBehaviour, IDamagable
     private bool _isAlive=true;
     RaycastHit hit;
     private InputAction _tabAction;
+    
+    // VFX
+    [SerializeField] private ParticleSystem _vfxSwitchWeapon;
 
     public void Start() {
         foreach (var weapon in _weapons) {
@@ -39,6 +43,9 @@ public class RototController : MonoBehaviour, IDamagable
         Debug.Log("Switch gun");
         if (_currenWeaponID+1>=_weapons.Length) SelectWeapon(0);
         else SelectWeapon(_currenWeaponID+1);
+        
+        // VFX
+        if(_vfxSwitchWeapon) _vfxSwitchWeapon.Play();
     }
 
     void Update() {
