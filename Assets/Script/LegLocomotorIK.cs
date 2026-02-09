@@ -110,7 +110,7 @@ public class LegLocomotorIK : MonoBehaviour {
         if (_usPlayParticuleSystem &&_particleSystemFootStep!=null) _particleSystemFootStep.Play();
         if (_usSpawnVFXAtFeet&& _prfFootImpact != null)  {
             GameObject go = Instantiate(_prfFootImpact, _footTarget.position, Quaternion.identity);
-            go.transform.forward = Vector3.up;
+            go.transform.forward = Vector3.down;
         }
     }
 

@@ -114,7 +114,7 @@ public class RototController : MonoBehaviour, IDamagable
             }
         }
         
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         // VFX
         for (int i = 0; i < currentWeaponEffects.Count; i++)
         {
