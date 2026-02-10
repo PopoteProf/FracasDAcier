@@ -1,0 +1,192 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+namespace HugoI.Scripts
+{
+    [ExecuteAlways]
+    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+    public class ProceduralPillar : MonoBehaviour
+    {
+        [Header("Settings")]
+        [SerializeField] private bool _realtimeGeneration;
+        [SerializeField] private bool _isAdaptable;
+        [SerializeField] private bool _haveBases;
+
+        [Header("MeshData")]
+        [SerializeField] private Vector3 _origin;
+        [SerializeField] private float _length = 1f;
+        [SerializeField] private float _width = 1f;
+        [SerializeField] private float _height = 1f;
+        [SerializeField] private float _basesSize = 1.5f;
+        [SerializeField] private int _loop = 1;
+        [SerializeField] private List<Quad> _quads = new();
+        
+        [Header("References")]
+        [SerializeField] private MeshFilter _meshFilter;
+        [SerializeField] private MeshRenderer _meshRenderer;
+        
+        private Mesh _mesh;
+        private List<Vector3> _vertices = new();
+        private List<int> _triangles = new();
+        private List<Vector2> _uvs = new();
+
+        private void Awake()
+        {
+            _meshFilter = GetComponent<MeshFilter>();
+            _meshRenderer = GetComponent<MeshRenderer>();
+        }
+
+        private void Update()
+        {
+            if (_isAdaptable)
+            {
+                bool hitSomething = Physics.Raycast(transform.position, Vector3.up, out RaycastHit hit, Mathf.Infinity);
+                // Paramètres : (Origine, Direction * Distance, Couleur)
+                Debug.DrawRay(transform.position, Vector3.up * 100f, Color.red);
+                
+                if (hitSomething)
+                {
+                    float distance = Vector3.Distance(transform.position, hit.point);
+                    
+                    _loop = Mathf.RoundToInt(distance / _height);
+                }
+            }
+            
+            if (_realtimeGeneration) GenerateMesh();
+        }
+
+        [ContextMenu("Generate Mesh")]
+        private void GenerateMesh()
+        {
+            // CLEAR
+            _vertices.Clear();
+            _triangles.Clear();
+            _uvs.Clear();
+            
+            _mesh = new Mesh();
+            _mesh.name = "ProceduralMesh";
+
+            float yOffset = 0f;
+            
+            for (int i = 0; i < _loop; i++)
+            {
+                yOffset = i * _height;
+                
+                foreach (var quad in _quads)
+                {
+                    Vector3 v1 = new Vector3(quad.pos[0].x * _length, quad.pos[0].y * _height + yOffset, quad.pos[0].z * _width) + _origin - new Vector3(_length / 2f, 0f, _width / 2f);
+                    Vector3 v2 = new Vector3(quad.pos[1].x * _length, quad.pos[1].y * _height + yOffset, quad.pos[1].z * _width) + _origin - new Vector3(_length / 2f, 0f, _width / 2f);
+                    Vector3 v3 = new Vector3(quad.pos[2].x * _length, quad.pos[2].y * _height + yOffset, quad.pos[2].z * _width) + _origin - new Vector3(_length / 2f, 0f, _width / 2f);
+                    Vector3 v4 = new Vector3(quad.pos[3].x * _length, quad.pos[3].y * _height + yOffset, quad.pos[3].z * _width) + _origin - new Vector3(_length / 2f, 0f, _width / 2f);
+                
+                    GenerateQuad(v1, v2, v3, v4);
+                
+                    switch (quad.name)
+                    {
+                        case "front":
+                            AddQuadUVs(new Vector2(0.25f, 0.5f), new Vector2(0.25f, 0.75f), new Vector2(0.5f, 0.75f), new Vector2(0.5f, 0.5f));
+                            break;
+                        case "left":
+                            AddQuadUVs(new Vector2(0f, 0.5f), new Vector2(0f, 0.75f), new Vector2(0.25f, 0.75f), new Vector2(0.25f, 0.5f));
+                            break;
+                        case "right":
+                            AddQuadUVs(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.75f), new Vector2(0.75f, 0.75f), new Vector2(0.75f, 0.5f));
+                            break;
+                        case "top":
+                            AddQuadUVs(new Vector2(0.25f, 0.75f), new Vector2(0.25f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 0.75f));
+                            break;
+                        case "bot":
+                            AddQuadUVs(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.25f), new Vector2(0.25f, 0.25f), new Vector2(0.25f, 0.5f));
+                            break;
+                        case "back":
+                            AddQuadUVs(new Vector2(0.5f, 0.25f), new Vector2(0.5f, 0f), new Vector2(0.25f, 0f), new Vector2(0.25f, 0.25f));
+                            break;
+                    }
+
+                    if (_haveBases)
+                    {
+                        if (i == 0)
+                        {
+                            GenerateBase(quad, yOffset - 0.5f);
+                        }
+                        else if (i == _loop - 1)
+                        {
+                            GenerateBase(quad, yOffset + 0.5f);
+                        }
+                    }
+                }
+            }
+            
+            // MESH ASSIGNATION
+            _mesh.vertices = _vertices.ToArray();
+            _mesh.triangles = _triangles.ToArray();
+            _mesh.uv = _uvs.ToArray();
+            _mesh.RecalculateNormals();
+            _mesh.RecalculateTangents();
+            
+            _meshFilter.mesh = _mesh;
+        }
+
+        private void GenerateBase(Quad quad, float yOffset)
+        {
+            Vector3 v1 = new Vector3(quad.pos[0].x * _length * _basesSize, quad.pos[0].y * _height * _basesSize + yOffset, quad.pos[0].z * _width * _basesSize) + _origin - new Vector3(_length * _basesSize / 2f, 0f, _width * _basesSize / 2f);
+            Vector3 v2 = new Vector3(quad.pos[1].x * _length * _basesSize, quad.pos[1].y * _height * _basesSize + yOffset, quad.pos[1].z * _width * _basesSize) + _origin - new Vector3(_length * _basesSize / 2f, 0f, _width * _basesSize / 2f);
+            Vector3 v3 = new Vector3(quad.pos[2].x * _length * _basesSize, quad.pos[2].y * _height * _basesSize + yOffset, quad.pos[2].z * _width * _basesSize) + _origin - new Vector3(_length * _basesSize / 2f, 0f, _width * _basesSize / 2f);
+            Vector3 v4 = new Vector3(quad.pos[3].x * _length * _basesSize, quad.pos[3].y * _height * _basesSize + yOffset, quad.pos[3].z * _width * _basesSize) + _origin - new Vector3(_length * _basesSize / 2f, 0f, _width * _basesSize / 2f);
+
+                
+            GenerateQuad(v1, v2, v3, v4);
+
+            switch (quad.name)
+            {
+                case "front":
+                    AddQuadUVs(new Vector2(0.25f, 0.5f), new Vector2(0.25f, 0.75f), new Vector2(0.5f, 0.75f), new Vector2(0.5f, 0.5f));
+                    break;
+                case "left":
+                    AddQuadUVs(new Vector2(0f, 0.5f), new Vector2(0f, 0.75f), new Vector2(0.25f, 0.75f), new Vector2(0.25f, 0.5f));
+                    break;
+                case "right":
+                    AddQuadUVs(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.75f), new Vector2(0.75f, 0.75f), new Vector2(0.75f, 0.5f));
+                    break;
+                case "top":
+                    AddQuadUVs(new Vector2(0.25f, 0.75f), new Vector2(0.25f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 0.75f));
+                    break;
+                case "bot":
+                    AddQuadUVs(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.25f), new Vector2(0.25f, 0.25f), new Vector2(0.25f, 0.5f));
+                    break;
+                case "back":
+                    AddQuadUVs(new Vector2(0.5f, 0.25f), new Vector2(0.5f, 0f), new Vector2(0.25f, 0f), new Vector2(0.25f, 0.25f));
+                    break;
+            }
+        }
+
+        private void GenerateQuad(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
+        {
+            int index = _vertices.Count;
+            
+            // ADD VERTICES
+            _vertices.Add(v1);
+            _vertices.Add(v2);
+            _vertices.Add(v3);
+            _vertices.Add(v4);
+            
+            // ADD TRIANGLES
+            _triangles.Add(index);
+            _triangles.Add(index + 1);
+            _triangles.Add(index + 2);
+            
+            _triangles.Add(index);
+            _triangles.Add(index + 2);
+            _triangles.Add(index + 3);
+        }
+
+        private void AddQuadUVs(Vector2 uv1, Vector2 uv2, Vector2 uv3, Vector2 uv4)
+        {
+            _uvs.Add(uv1);
+            _uvs.Add(uv2);
+            _uvs.Add(uv3);
+            _uvs.Add(uv4);
+        }
+    }
+}
