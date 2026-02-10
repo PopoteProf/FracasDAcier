@@ -17,22 +17,17 @@ public class ProceduralQuad : MonoBehaviour
     {
         _meshFilter = GetComponent<MeshFilter>();
         _meshRenderer = GetComponent<MeshRenderer>();
-        GenrateMesh();
+        GenerateMesh();
     }
 
     [ContextMenu("GenrateMesh")]
-    private void GenrateMesh()
+    private void GenerateMesh()
     {
         Mesh mesh = new Mesh();
         mesh.name = "MonNouveauMesh";
         
         _meshFilter.mesh = mesh;
         
-        List<Vector3> vertices = new List<Vector3>();
-        List<int> triangles = new List<int>();
-        List<Vector3> normals = new List<Vector3>();
-        List<Vector2> uvs = new List<Vector2>();
-        List<Vector4> tangents = new List<Vector4>();
         
         Vector3 a = new Vector3(0, 0, 0); // 0
         Vector3 b = new Vector3(0, 1, 0); // 1
@@ -43,27 +38,40 @@ public class ProceduralQuad : MonoBehaviour
         Vector3 g = new Vector3(1, 0, 1); // 6 
         Vector3 h = new Vector3(1, 1, 1); // 7
         
-        AddTriangle(a,b,c);
-        AddTriangle(b,d,c);
-        AddTriangle(d,b,f);
-        AddTriangle(f,h,d);
-        AddTriangle(a,e,f);
-        AddTriangle(f,b,a);
-        AddTriangle(h,f,e);
-        AddTriangle(g,h,e);
-        AddTriangle(c,d,g);
-        AddTriangle(g,d,h);
-        AddTriangle(e,a,g);
-        AddTriangle(g,a,c);
+        // avec triangle
+        // AddTriangle(a,b,c);
+        // AddTriangle(b,d,c);
+        // AddTriangle(d,b,f);
+        // AddTriangle(f,h,d);
+        // AddTriangle(a,e,f);
+        // AddTriangle(f,b,a);
+        // AddTriangle(h,f,e);
+        // AddTriangle(g,h,e);
+        // AddTriangle(c,d,g);
+        // AddTriangle(g,d,h);
+        // AddTriangle(e,a,g);
+        // AddTriangle(g,a,c);
         
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1)); 
-        uvs.Add(new Vector2(1, 0));
-        uvs.Add(new Vector2(1, 1));
+        // avec caré
+        AddQuad(a,b,d,c);
+        AddUvToQuad(new Vector2(0.25f, 0.25f), new Vector2(0.25f, 0.5f), new Vector2(0.5f,0.5f), new Vector2(0.5f, 0.25f));
+        AddQuad(b,f,h,d);
+        AddUvToQuad(new Vector2(0.25f, 0.5f), new Vector2(0.25f, 0.75f), new Vector2(0.5f,0.75f), new Vector2(0.5f, 0.5f));
+        AddQuad(c,d,h,g);
+        AddUvToQuad(new Vector2(0.75f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f,0.75f), new Vector2(0.75f, 0.75f));
+        AddQuad(f,b,a,e);
+        AddUvToQuad(new Vector2(0.25f, 0.75f), new Vector2(0.25f, 0.5f), new Vector2(0f,0.5f), new Vector2(0f, 0.75f));
+        AddQuad(h,f,e,g);
+        AddUvToQuad(new Vector2(0.5f, 0.75f), new Vector2(0.25f, 0.75f), new Vector2(0.25f,1f), new Vector2(0.5f, 1f));
+        AddQuad(a,c,g,e);
+        AddUvToQuad(new Vector2(0.25f, 0f), new Vector2(0.5f, 0f), new Vector2(0.5f,0.25f), new Vector2(0.25f, 0.25f));
+        
+      
+       
         
         mesh.vertices = _vertices.ToArray();
         mesh.triangles = _triangles.ToArray();
-        mesh.uv = uvs.ToArray();
+        mesh.uv = _uvs.ToArray();
         
         mesh.RecalculateNormals();
         mesh.RecalculateTangents();
@@ -85,7 +93,26 @@ public class ProceduralQuad : MonoBehaviour
 
     public void AddQuad(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
     {
-        AddTriangle(v1, v2, v4);
-        AddTriangle(v4, v2, v3);
+        int index = _vertices.Count;
+        _vertices.Add(v1);
+        _vertices.Add(v2);
+        _vertices.Add(v3);
+        _vertices.Add(v4);
+        
+        _triangles.Add(index);
+        _triangles.Add(index + 1);
+        _triangles.Add(index + 2);
+        
+        _triangles.Add(index);
+        _triangles.Add(index + 2);
+        _triangles.Add(index + 3);
+    }
+
+    public void AddUvToQuad(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
+    {
+        _uvs.Add(v1);
+        _uvs.Add(v2);
+        _uvs.Add(v3);
+        _uvs.Add(v4);
     }
 }
