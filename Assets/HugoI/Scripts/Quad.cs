@@ -9,5 +9,6 @@ namespace HugoI.Scripts
     {
         public string name;
         public List<Vector3> pos;
+        public List<Vector2> uvs;
     }
 }

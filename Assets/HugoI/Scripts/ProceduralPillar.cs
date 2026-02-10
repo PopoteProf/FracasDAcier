@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace HugoI.Scripts
@@ -18,7 +17,7 @@ namespace HugoI.Scripts
         [SerializeField] private float _length = 1f;
         [SerializeField] private float _width = 1f;
         [SerializeField] private float _height = 1f;
-        [SerializeField] private float _basesSize = 1.5f;
+        [SerializeField] private Vector3 _basesSize = new Vector3(1.5f, 1.5f, 1.5f);
         [SerializeField] private int _loop = 1;
         [SerializeField] private List<Quad> _quads = new();
         
@@ -41,9 +40,8 @@ namespace HugoI.Scripts
         {
             if (_isAdaptable)
             {
-                bool hitSomething = Physics.Raycast(transform.position, Vector3.up, out RaycastHit hit, Mathf.Infinity);
-                // Paramètres : (Origine, Direction * Distance, Couleur)
-                Debug.DrawRay(transform.position, Vector3.up * 100f, Color.red);
+                bool hitSomething = Physics.Raycast(transform.position, transform.up, out RaycastHit hit, Mathf.Infinity);
+                Debug.DrawLine(transform.position, hit.point, Color.red);
                 
                 if (hitSomething)
                 {
@@ -81,38 +79,17 @@ namespace HugoI.Scripts
                     Vector3 v4 = new Vector3(quad.pos[3].x * _length, quad.pos[3].y * _height + yOffset, quad.pos[3].z * _width) + _origin - new Vector3(_length / 2f, 0f, _width / 2f);
                 
                     GenerateQuad(v1, v2, v3, v4);
-                
-                    switch (quad.name)
-                    {
-                        case "front":
-                            AddQuadUVs(new Vector2(0.25f, 0.5f), new Vector2(0.25f, 0.75f), new Vector2(0.5f, 0.75f), new Vector2(0.5f, 0.5f));
-                            break;
-                        case "left":
-                            AddQuadUVs(new Vector2(0f, 0.5f), new Vector2(0f, 0.75f), new Vector2(0.25f, 0.75f), new Vector2(0.25f, 0.5f));
-                            break;
-                        case "right":
-                            AddQuadUVs(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.75f), new Vector2(0.75f, 0.75f), new Vector2(0.75f, 0.5f));
-                            break;
-                        case "top":
-                            AddQuadUVs(new Vector2(0.25f, 0.75f), new Vector2(0.25f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 0.75f));
-                            break;
-                        case "bot":
-                            AddQuadUVs(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.25f), new Vector2(0.25f, 0.25f), new Vector2(0.25f, 0.5f));
-                            break;
-                        case "back":
-                            AddQuadUVs(new Vector2(0.5f, 0.25f), new Vector2(0.5f, 0f), new Vector2(0.25f, 0f), new Vector2(0.25f, 0.25f));
-                            break;
-                    }
+                    AddQuadUVs(quad.uvs[0], quad.uvs[1], quad.uvs[2], quad.uvs[3]);
 
                     if (_haveBases)
                     {
                         if (i == 0)
                         {
-                            GenerateBase(quad, yOffset - 0.5f);
+                            GenerateBase(quad, yOffset);
                         }
                         else if (i == _loop - 1)
                         {
-                            GenerateBase(quad, yOffset + 0.5f);
+                            GenerateBase(quad, yOffset + _height);
                         }
                     }
                 }
@@ -130,35 +107,13 @@ namespace HugoI.Scripts
 
         private void GenerateBase(Quad quad, float yOffset)
         {
-            Vector3 v1 = new Vector3(quad.pos[0].x * _length * _basesSize, quad.pos[0].y * _height * _basesSize + yOffset, quad.pos[0].z * _width * _basesSize) + _origin - new Vector3(_length * _basesSize / 2f, 0f, _width * _basesSize / 2f);
-            Vector3 v2 = new Vector3(quad.pos[1].x * _length * _basesSize, quad.pos[1].y * _height * _basesSize + yOffset, quad.pos[1].z * _width * _basesSize) + _origin - new Vector3(_length * _basesSize / 2f, 0f, _width * _basesSize / 2f);
-            Vector3 v3 = new Vector3(quad.pos[2].x * _length * _basesSize, quad.pos[2].y * _height * _basesSize + yOffset, quad.pos[2].z * _width * _basesSize) + _origin - new Vector3(_length * _basesSize / 2f, 0f, _width * _basesSize / 2f);
-            Vector3 v4 = new Vector3(quad.pos[3].x * _length * _basesSize, quad.pos[3].y * _height * _basesSize + yOffset, quad.pos[3].z * _width * _basesSize) + _origin - new Vector3(_length * _basesSize / 2f, 0f, _width * _basesSize / 2f);
-
+            Vector3 v1 = new Vector3(quad.pos[0].x * _length * _basesSize.x, quad.pos[0].y * _height * _basesSize.y + yOffset, quad.pos[0].z * _width * _basesSize.z) + _origin - new Vector3(_length * _basesSize.x / 2f, _height * _basesSize.y / 2f, _width * _basesSize.z / 2f);
+            Vector3 v2 = new Vector3(quad.pos[1].x * _length * _basesSize.x, quad.pos[1].y * _height * _basesSize.y + yOffset, quad.pos[1].z * _width * _basesSize.z) + _origin - new Vector3(_length * _basesSize.x / 2f, _height * _basesSize.y / 2f, _width * _basesSize.z / 2f);
+            Vector3 v3 = new Vector3(quad.pos[2].x * _length * _basesSize.x, quad.pos[2].y * _height * _basesSize.y + yOffset, quad.pos[2].z * _width * _basesSize.z) + _origin - new Vector3(_length * _basesSize.x / 2f, _height * _basesSize.y / 2f, _width * _basesSize.z / 2f);
+            Vector3 v4 = new Vector3(quad.pos[3].x * _length * _basesSize.x, quad.pos[3].y * _height * _basesSize.y + yOffset, quad.pos[3].z * _width * _basesSize.z) + _origin - new Vector3(_length * _basesSize.x / 2f, _height * _basesSize.y / 2f, _width * _basesSize.z / 2f);
                 
             GenerateQuad(v1, v2, v3, v4);
-
-            switch (quad.name)
-            {
-                case "front":
-                    AddQuadUVs(new Vector2(0.25f, 0.5f), new Vector2(0.25f, 0.75f), new Vector2(0.5f, 0.75f), new Vector2(0.5f, 0.5f));
-                    break;
-                case "left":
-                    AddQuadUVs(new Vector2(0f, 0.5f), new Vector2(0f, 0.75f), new Vector2(0.25f, 0.75f), new Vector2(0.25f, 0.5f));
-                    break;
-                case "right":
-                    AddQuadUVs(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.75f), new Vector2(0.75f, 0.75f), new Vector2(0.75f, 0.5f));
-                    break;
-                case "top":
-                    AddQuadUVs(new Vector2(0.25f, 0.75f), new Vector2(0.25f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 0.75f));
-                    break;
-                case "bot":
-                    AddQuadUVs(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.25f), new Vector2(0.25f, 0.25f), new Vector2(0.25f, 0.5f));
-                    break;
-                case "back":
-                    AddQuadUVs(new Vector2(0.5f, 0.25f), new Vector2(0.5f, 0f), new Vector2(0.25f, 0f), new Vector2(0.25f, 0.25f));
-                    break;
-            }
+            AddQuadUVs(quad.uvs[0], quad.uvs[1], quad.uvs[2], quad.uvs[3]);
         }
 
         private void GenerateQuad(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
