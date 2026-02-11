@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using HugoI.Scripts.Animation;
+using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class ThirdPersonCharacterController : MonoBehaviour
 {
+    [Header("Settings")]
     [SerializeField] private PlayerInteractor _playerInteractor;
     [SerializeField] private bool _freezControl;
     [SerializeField] private float moveSpeed;
@@ -12,16 +14,31 @@ public class ThirdPersonCharacterController : MonoBehaviour
     [SerializeField] private float _acceleration =1;
     [SerializeField] private float RotaitionSpeed =90;
 
+    [Header("Multi-Aim Constraint")]
+    [SerializeField] private MultiAimConstraint _multiAimConstraint;
+    [SerializeField] private AnimationCurve _animationCurveAim;
+    [SerializeField] private float _lookUpSpeed;
     
+    [Header("Two Bone IK Constraint")]
+    [SerializeField] private TwoBoneIKConstraint _twoBoneIKConstraint;
+    [SerializeField] private AnimationCurve _animationCurveTwoBone;
+    [SerializeField] private float _hitWallSpeed;
     
+    private CharacterController _characterController;
+    private float _moveSpeed;
     
-    CharacterController _characterController;
-    float _moveSpeed;
-    LookUpTrigger _lookUpTrigger;
+    // LookUp
+    private LookUpTrigger _lookUpTrigger;
+    private float _timeAnimationLookUp;
+    
+    // HitWall
+    private HitWall _hitWallRight;
+    private float _timeAnimationTwoBoneRight;
+    
     private Transform _buttonTransform;
     
-    InputAction _moveAction;
-    InputAction _fireAction;
+    private InputAction _moveAction;
+    private InputAction _fireAction;
     
     void Start() {
         _characterController =  GetComponent<CharacterController>();
@@ -32,13 +49,14 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     }
 
-    
-
-    private void Update() {
+    private void Update() 
+    {
         ManageMouvement();
+        ManageLookUp();
     }
 
-    private void ManageMouvement() {
+    private void ManageMouvement() 
+    {
         Vector2 inputVec =Vector2.zero;
         if( _freezControl)inputVec = _moveAction.ReadValue<Vector2>();
         
@@ -81,16 +99,63 @@ public class ThirdPersonCharacterController : MonoBehaviour
         }
     }
 
-    public void SetUpLookUpTrigger(LookUpTrigger trigger) {
-        _lookUpTrigger = trigger;
-    }
-
-    public void LeaveLookUpTrigger(LookUpTrigger trigger) {
-        if (trigger == _lookUpTrigger) {
-            _lookUpTrigger = null;
+    private void ManageLookUp()
+    {
+        if (_lookUpTrigger)
+        {
+            _multiAimConstraint.data.sourceObjects[0].transform.position = _lookUpTrigger.LookUpTarget.position;
+            
+            if (_multiAimConstraint.weight >= 1f) return;
+            
+            _timeAnimationLookUp += Mathf.Clamp(Time.deltaTime * _lookUpSpeed, 0f, 1f);
+            _multiAimConstraint.weight = Mathf.Lerp(0f, 1f, _animationCurveAim.Evaluate(_timeAnimationLookUp));
+        }
+        else
+        {
+            if (_multiAimConstraint.weight <= 0f) return;
+            
+            _timeAnimationLookUp -= Mathf.Clamp(Time.deltaTime * _lookUpSpeed, 0f, 1f);;
+            _multiAimConstraint.weight = Mathf.Lerp(0f, 1f, _animationCurveAim.Evaluate(_timeAnimationLookUp));
         }
     }
 
+    // LookUp
+    public void SetUpLookUpTrigger(LookUpTrigger trigger) 
+    {
+        _lookUpTrigger = trigger;
+        _timeAnimationLookUp = 0f;
+    }
+
+    public void LeaveLookUpTrigger(LookUpTrigger trigger) 
+    {
+        if (trigger == _lookUpTrigger) 
+        {
+            _lookUpTrigger = null;
+        }
+    }
+    
+    // HitWall
+    public void HitWallRight(HitWall hitWall)
+    {
+        _hitWallRight = hitWall;
+
+        if (_hitWallRight.HitWallPos != Vector3.zero)
+        {
+            _twoBoneIKConstraint.data.target.position = _hitWallRight.HitWallPos;
+            
+            if (_twoBoneIKConstraint.weight >= 1f) return;
+            
+            _timeAnimationTwoBoneRight += Mathf.Clamp(Time.deltaTime * _hitWallSpeed, 0f, 1f);
+            _twoBoneIKConstraint.weight = Mathf.Lerp(0f, 1f, _animationCurveTwoBone.Evaluate(_timeAnimationTwoBoneRight));
+        }
+        else
+        {
+            if (_twoBoneIKConstraint.weight <= 0f) return;
+            
+            _timeAnimationTwoBoneRight -= Mathf.Clamp(Time.deltaTime * _hitWallSpeed, 0f, 1f);;
+            _twoBoneIKConstraint.weight = Mathf.Lerp(0f, 1f, _animationCurveTwoBone.Evaluate(_timeAnimationTwoBoneRight));
+        }
+    }
     
     private void FireActionOnstarted(InputAction.CallbackContext obj) {
         Debug.Log("FireActionOnstarted");

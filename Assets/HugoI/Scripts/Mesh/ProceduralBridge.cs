@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HugoI.Scripts
+namespace HugoI.Scripts.Mesh
 {
     [ExecuteAlways]
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -20,7 +20,7 @@ namespace HugoI.Scripts
         [Header("Debug")]
         [SerializeField] private bool _displayDebug;
         
-        private Mesh _mesh;
+        private UnityEngine.Mesh _mesh;
         private List<Vector3> _vertices = new();
         private List<int> _triangles = new();
         private List<Vector2> _uvs = new();
@@ -37,7 +37,7 @@ namespace HugoI.Scripts
             _triangles = new();
             _uvs = new();
             
-            _mesh = new Mesh();
+            _mesh = new UnityEngine.Mesh();
             _mesh.name = "ProceduralMesh";
             
             AddVertices();

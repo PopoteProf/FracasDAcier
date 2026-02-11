@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HugoI.Scripts
+namespace HugoI.Scripts.Mesh
 {
     public static class ProceduralMesh
     {

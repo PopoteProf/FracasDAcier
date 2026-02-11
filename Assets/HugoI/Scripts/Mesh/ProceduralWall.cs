@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace HugoI.Scripts
+namespace HugoI.Scripts.Mesh
 {
     [ExecuteAlways]
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -24,7 +24,7 @@ namespace HugoI.Scripts
         [Header("Debug")]
         [SerializeField] private bool _displayDebug;
         
-        private Mesh _mesh;
+        private UnityEngine.Mesh _mesh;
         private List<Vector3> _vertices = new();
         private List<Vector3> _verticesFront = new();
         private List<Vector3> _verticesTop = new();
@@ -48,7 +48,7 @@ namespace HugoI.Scripts
             _triangles = new();
             _uvs = new();
             
-            _mesh = new Mesh();
+            _mesh = new UnityEngine.Mesh();
             _mesh.name = "ProceduralMesh";
             
             AddVertices();
