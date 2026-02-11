@@ -7,6 +7,11 @@ public class ProceduralCube : MonoBehaviour
 {
     private MeshFilter _meshFilter;
     private MeshRenderer _meshRenderer;
+
+    [Range(1f, 50f)]
+    public float SizeMultiplier = 1f;
+
+    public bool GeneratingUpdate = true;
     
     public Vector3 A = new Vector3(0, 0, 0);
     public Vector3 B = new Vector3(0, 1, 0);
@@ -38,8 +43,6 @@ public class ProceduralCube : MonoBehaviour
     public Vector3 W = new Vector3(1, 0, 1);
     public Vector3 X = new Vector3(1, 0, 0);
     
-    public float SizeMultiplier = 1f;
-    
     private List<Vector3> _vertices = new List<Vector3>();
     private List<int> _triangles = new List<int>();
     private List<Vector2> _uvs = new List<Vector2>();
@@ -55,15 +58,10 @@ public class ProceduralCube : MonoBehaviour
 
     private void Update()
     {
-        // Update vertices positions based on size multiplier
-        for (int i = 0; i < _vertices.Count; i++)
+        if (GeneratingUpdate)
         {
-            _vertices[i] = _vertices[i].normalized * SizeMultiplier;
+            GenerateMesh();
         }
-        
-        // Update mesh vertices
-        _mesh.vertices = _vertices.ToArray();
-        _mesh.RecalculateNormals();
     }
 
     [ContextMenu("Generate Mesh")]
@@ -73,6 +71,7 @@ public class ProceduralCube : MonoBehaviour
         _mesh.name = "ProceduralCube";
         _vertices = new List<Vector3>();
         _triangles = new List<int>();
+        _uvs = new List<Vector2>();
         
         AddQuad(A,B,C,D);
         AddQuadUVs(new Vector2(0.25f,0.5f), new Vector2(0.25f,0.75f), new Vector2(0.5f,0.5f), new Vector2(0.5f,0.75f));
@@ -87,6 +86,10 @@ public class ProceduralCube : MonoBehaviour
         AddQuad(U,V,W,X);
         AddQuadUVs(new Vector2(0.25f, 0.25f), new Vector2(0.25f, 0.5f), new Vector2(0.5f, 0.25f), new Vector2(0.5f, 0.5f));
         
+        for (int i = 0; i < _vertices.Count; i++)
+        {
+            _vertices[i] = _vertices[i] * SizeMultiplier;
+        }
         // Generate mesh
         _mesh.vertices = _vertices.ToArray();
         _mesh.triangles = _triangles.ToArray();
