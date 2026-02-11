@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
@@ -12,13 +13,17 @@ public class ThirdPersonCharacterController : MonoBehaviour
     [SerializeField] private float _acceleration =1;
     [SerializeField] private float RotaitionSpeed =90;
 
-    
+    [SerializeField] MultiAimConstraint  _multiAimConstraint;
+    [SerializeField] Transform _target;
+    [SerializeField] AnimationCurve _moveCurve;
+    [SerializeField] private Transform _spine;
     
     
     CharacterController _characterController;
     float _moveSpeed;
     LookUpTrigger _lookUpTrigger;
     private Transform _buttonTransform;
+    [SerializeField]private float _timer;
     
     InputAction _moveAction;
     InputAction _fireAction;
@@ -36,6 +41,34 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     private void Update() {
         ManageMouvement();
+        
+        if (_lookUpTrigger != null)
+        {
+            Vector3 origin = _target.position -  _spine.position;
+            float dot = Vector3.Dot( _spine.forward.normalized,origin.normalized);
+            Debug.Log(dot);
+            if (_multiAimConstraint.weight < 1 && dot >= 0.1)
+            {
+                _timer += Time.deltaTime;
+                _multiAimConstraint.weight = Mathf.Lerp(0, 1,_moveCurve.Evaluate(_timer) );
+            }
+            else
+            {
+                if (_multiAimConstraint.weight > 0)
+                {
+                    _timer -= Time.deltaTime;
+                    _multiAimConstraint.weight = Mathf.Lerp(0, 1, _moveCurve.Evaluate(_timer));
+                }
+            }
+            _target.position = _lookUpTrigger.LookUpTarget.position;
+        }
+
+        if (_lookUpTrigger == null && _multiAimConstraint.weight > 0)
+        {
+            _timer -= Time.deltaTime;
+            _multiAimConstraint.weight = Mathf.Lerp(0, 1, _moveCurve.Evaluate(_timer));
+        }
+        
     }
 
     private void ManageMouvement() {
@@ -83,6 +116,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     public void SetUpLookUpTrigger(LookUpTrigger trigger) {
         _lookUpTrigger = trigger;
+        _timer = 0;
     }
 
     public void LeaveLookUpTrigger(LookUpTrigger trigger) {

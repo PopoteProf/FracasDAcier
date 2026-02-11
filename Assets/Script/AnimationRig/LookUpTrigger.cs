@@ -17,4 +17,18 @@ public class LookUpTrigger : MonoBehaviour {
             other.GetComponent<ThirdPersonCharacterController>().LeaveLookUpTrigger(this);
         }
     }
+    
+    void OnDrawGizmos()
+    {
+        SphereCollider col = GetComponent<SphereCollider>();
+
+        if (col == null) return;
+
+        Gizmos.color = Color.yellow;
+
+        // Attention au center local !
+        Vector3 worldCenter = transform.TransformPoint(col.center);
+
+        Gizmos.DrawWireSphere(worldCenter, col.radius * transform.lossyScale.x);
+    }
 }
