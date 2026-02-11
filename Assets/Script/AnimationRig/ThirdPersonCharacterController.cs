@@ -11,7 +11,12 @@ public class ThirdPersonCharacterController : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private float _acceleration =1;
     [SerializeField] private float RotaitionSpeed =90;
-
+    
+    [SerializeField] private MultiAimConstraint _multiAimConstraint;
+    [SerializeField] private Transform _lookTarget;
+    [SerializeField] private Transform _lookUpTarget;
+    [SerializeField] private float _lookSpeed = 0.05f;
+    [SerializeField] private Transform _torsoBone;
     
     
     
@@ -36,6 +41,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     private void Update() {
         ManageMouvement();
+        ManageLookUp();
     }
 
     private void ManageMouvement() {
@@ -83,6 +89,8 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
     public void SetUpLookUpTrigger(LookUpTrigger trigger) {
         _lookUpTrigger = trigger;
+        ManageLookUp();
+        
     }
 
     public void LeaveLookUpTrigger(LookUpTrigger trigger) {
@@ -96,6 +104,26 @@ public class ThirdPersonCharacterController : MonoBehaviour
         Debug.Log("FireActionOnstarted");
         if (_playerInteractor!=null)_playerInteractor.Interact(this);
     }
-    
-    
+
+    private void ManageLookUp()
+    {
+        Debug.Log($"Dot product: {Vector3.Dot(_torsoBone.forward, (_lookUpTarget.position - transform.position).normalized)}");
+        if (_lookUpTrigger == null)
+        {
+            _multiAimConstraint.enabled = false;
+            if (_multiAimConstraint.weight > 0) _multiAimConstraint.weight -= _lookSpeed * Time.deltaTime;
+            
+        }
+        else
+        {
+            if (Vector3.Dot(_torsoBone.forward, (_lookUpTarget.position - transform.position).normalized) > 0.4 ||
+                Vector3.Dot(_torsoBone.forward, (_lookUpTarget.position - transform.position).normalized) < -0.4)
+            {
+
+                _multiAimConstraint.enabled = true;
+                if (_multiAimConstraint.weight < 1) _multiAimConstraint.weight += _lookSpeed * Time.deltaTime;
+                _lookTarget.position = _lookUpTarget.position;
+            }
+        }
+    }
 }
