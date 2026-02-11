@@ -11,7 +11,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private float _acceleration =1;
     [SerializeField] private float RotaitionSpeed =90;
-
+    [SerializeField] private MultiAimConstraint _multiAimConstraint;
     
     
     
@@ -23,19 +23,24 @@ public class ThirdPersonCharacterController : MonoBehaviour
     InputAction _moveAction;
     InputAction _fireAction;
     
+    public float LookSpeed;
+    public AnimationCurve LookCurve;
+    public Transform LookTarget;
+    
     void Start() {
         _characterController =  GetComponent<CharacterController>();
         _moveAction = InputSystem.actions.FindAction("Move");
         
         _fireAction = InputSystem.actions.FindAction("Attack");
         _fireAction.started += FireActionOnstarted;
-
+        _multiAimConstraint.weight = 0;
     }
 
     
 
     private void Update() {
         ManageMouvement();
+        LookingTarget();
     }
 
     private void ManageMouvement() {
@@ -81,18 +86,47 @@ public class ThirdPersonCharacterController : MonoBehaviour
         }
     }
 
-    public void SetUpLookUpTrigger(LookUpTrigger trigger) {
+    public void SetUpLookUpTrigger(LookUpTrigger trigger)
+    {
         _lookUpTrigger = trigger;
+        LookTarget.transform.position = trigger.transform.position;
     }
 
-    public void LeaveLookUpTrigger(LookUpTrigger trigger) {
-        if (trigger == _lookUpTrigger) {
+    public void LeaveLookUpTrigger(LookUpTrigger trigger)
+    {
+        if (trigger == _lookUpTrigger) 
+        {
             _lookUpTrigger = null;
         }
     }
 
+    private void LookingTarget()
+    {
+        Vector3 LookVector = LookTarget.position - transform.position;
+        LookVector.y = 0;
+        Debug.Log(Vector3.Dot(LookVector.normalized, transform.forward));
+        Debug.DrawRay(transform.position, LookVector, Color.aquamarine);
+        Debug.DrawRay(transform.position, transform.forward * 2, Color.blue);
+        
+        LookTarget.transform.position = _lookUpTrigger.transform.position;
+        
+        if (Vector3.Dot(LookVector.normalized, transform.forward) < 0.5f || _lookUpTrigger == null )
+        {
+            LookForward();
+            Debug.LogError("Return");
+            return;
+        }
+        _multiAimConstraint.weight += LookSpeed * Time.deltaTime; 
+    }
+
+    private void LookForward()
+    {
+        _multiAimConstraint.weight -= LookSpeed * Time.deltaTime; 
+        Debug.LogWarning("LookForward");
+    }
     
-    private void FireActionOnstarted(InputAction.CallbackContext obj) {
+    private void FireActionOnstarted(InputAction.CallbackContext obj) 
+    {
         Debug.Log("FireActionOnstarted");
         if (_playerInteractor!=null)_playerInteractor.Interact(this);
     }

@@ -5,8 +5,10 @@ public class LookUpTrigger : MonoBehaviour {
 
     public Transform LookUpTarget => _lookUpTarget;
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Player")) {
+    private void OnTriggerEnter(Collider other) 
+    {
+        if (other.CompareTag("Player")) 
+        {
             other.GetComponent<ThirdPersonCharacterController>().SetUpLookUpTrigger(this);
         }
     }
