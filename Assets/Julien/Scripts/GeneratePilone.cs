@@ -16,7 +16,9 @@ namespace Julien.Scripts
         [SerializeField] private List<int> _triangles = new List<int>();
 
         [Header(" parameters")] 
-        public int Offset;
+        public bool ReelTime;
+        public int Count;
+        public float Offset;
         public float Hauteur;
         public float Largeur;
 
@@ -27,6 +29,18 @@ namespace Julien.Scripts
             GenerateMesh();
         }
 
+        private void Update()
+        {
+            if (ReelTime)
+            {
+                _vertices.Clear();
+                _triangles.Clear();
+                _uvs.Clear();
+                
+                GenerateMesh();
+            }
+        }
+
         public void GenerateMesh()
         {
             Mesh mesh = new Mesh();
@@ -34,27 +48,16 @@ namespace Julien.Scripts
         
             _meshFilter.mesh = mesh;
             
-            Vector3 a = new Vector3(0, 0, 0); // 0
-            Vector3 b = new Vector3(0, 1, 0); // 1
-            Vector3 c = new Vector3(1, 0, 0); // 2
-            Vector3 d = new Vector3(1, 1, 0); // 3 
-            Vector3 e = new Vector3(0, 0, 1); // 4
-            Vector3 f = new Vector3(0, 1, 1); // 5
-            Vector3 g = new Vector3(1, 0, 1); // 6 
-            Vector3 h = new Vector3(1, 1, 1); // 7
-            
             // AddQuad(a,b,d,c);
             // AddQuad(c,d,h,g);
             // AddQuad(f,b,a,e);
             // AddQuad(h,f,e,g);
             
             //GenerateSquare(a,b,c,d,e,f,g,h);
-            for (int i = 0; i < Hauteur; i++)
+            for (int i = 0; i < Count; i++)
             {
-                GenerateSegment(new Vector3(0,Vector3.zero.y + i * Offset,0));
+                GenerateSegment(new Vector3(0,Vector3.zero.y + i * Hauteur,0));
             }
-            
-            
             
             mesh.vertices = _vertices.ToArray();
             mesh.triangles = _triangles.ToArray();
@@ -104,13 +107,13 @@ namespace Julien.Scripts
         public void GenerateSegment(Vector3 origine)
         {
             Vector3 a = new Vector3(origine.x - Largeur / 2,origine.y + 0, origine.z - Largeur / 2); // 0
-            Vector3 b = new Vector3(origine.x - Largeur / 2,origine.y + 1, origine.z - Largeur / 2); // 1
+            Vector3 b = new Vector3(origine.x - Largeur / 2,origine.y + Hauteur, origine.z - Largeur / 2); // 1
             Vector3 c = new Vector3(origine.x + Largeur / 2,origine.y + 0, origine.z - Largeur / 2); // 2
-            Vector3 d = new Vector3(origine.x + Largeur / 2,origine.y + 1, origine.z - Largeur / 2); // 3 
+            Vector3 d = new Vector3(origine.x + Largeur / 2,origine.y + Hauteur, origine.z - Largeur / 2); // 3 
             Vector3 e = new Vector3(origine.x - Largeur / 2,origine.y + 0, origine.z + Largeur / 2); // 4
-            Vector3 f = new Vector3(origine.x - Largeur / 2,origine.y + 1, origine.z + Largeur / 2); // 5
+            Vector3 f = new Vector3(origine.x - Largeur / 2,origine.y + Hauteur, origine.z + Largeur / 2); // 5
             Vector3 g = new Vector3(origine.x + Largeur / 2,origine.y + 0, origine.z + Largeur / 2); // 6 
-            Vector3 h = new Vector3(origine.x + Largeur / 2,origine.y + 1, origine.z + Largeur / 2); // 7
+            Vector3 h = new Vector3(origine.x + Largeur / 2,origine.y + Hauteur, origine.z + Largeur / 2); // 7
             
             GenerateSquare(a,b,c,d,e,f,g,h);
         }
