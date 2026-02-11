@@ -47,7 +47,7 @@ namespace HugoI.Scripts
 
             foreach (var quad in _quads)
             {
-                GenerateQuad(quad.pos[0] * _meshSize, quad.pos[1] * _meshSize, quad.pos[2] * _meshSize, quad.pos[3] * _meshSize);
+                ProceduralMesh.GenerateQuadAndAddVertices(_vertices, _triangles, quad.pos[0] * _meshSize, quad.pos[1] * _meshSize, quad.pos[2] * _meshSize, quad.pos[3] * _meshSize);
 
                 switch (quad.name)
                 {

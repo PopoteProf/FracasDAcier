@@ -17,13 +17,16 @@ namespace HugoI.Scripts
         [SerializeField] private float _length = 1f;
         [SerializeField] private float _width = 1f;
         [SerializeField] private float _height = 1f;
-        [SerializeField] private Vector3 _basesSize = new Vector3(1.5f, 1.5f, 1.5f);
+        [SerializeField] private Vector3 _basesSize = new(1.5f, 1.5f, 1.5f);
         [SerializeField] private int _loop = 1;
         [SerializeField] private List<Quad> _quads = new();
         
         [Header("References")]
         [SerializeField] private MeshFilter _meshFilter;
         [SerializeField] private MeshRenderer _meshRenderer;
+        
+        [Header("Settings")]
+        [SerializeField] private bool _displayDebug;
         
         private Mesh _mesh;
         private List<Vector3> _vertices = new();
@@ -41,7 +44,7 @@ namespace HugoI.Scripts
             if (_isAdaptable)
             {
                 bool hitSomething = Physics.Raycast(transform.position, transform.up, out RaycastHit hit, Mathf.Infinity);
-                Debug.DrawLine(transform.position, hit.point, Color.red);
+                if (_displayDebug) Debug.DrawLine(transform.position, hit.point, Color.red);
                 
                 if (hitSomething)
                 {
@@ -78,8 +81,8 @@ namespace HugoI.Scripts
                     Vector3 v3 = new Vector3(quad.pos[2].x * _length, quad.pos[2].y * _height + yOffset, quad.pos[2].z * _width) + _origin - new Vector3(_length / 2f, 0f, _width / 2f);
                     Vector3 v4 = new Vector3(quad.pos[3].x * _length, quad.pos[3].y * _height + yOffset, quad.pos[3].z * _width) + _origin - new Vector3(_length / 2f, 0f, _width / 2f);
                 
-                    GenerateQuad(v1, v2, v3, v4);
-                    AddQuadUVs(quad.uvs[0], quad.uvs[1], quad.uvs[2], quad.uvs[3]);
+                    ProceduralMesh.GenerateQuadAndAddVertices(_vertices, _triangles, v1, v2, v3, v4);
+                    ProceduralMesh.AddQuadUVs(_uvs, quad.uvs[0], quad.uvs[1], quad.uvs[2], quad.uvs[3]);
 
                     if (_haveBases)
                     {
@@ -112,36 +115,8 @@ namespace HugoI.Scripts
             Vector3 v3 = new Vector3(quad.pos[2].x * _length * _basesSize.x, quad.pos[2].y * _height * _basesSize.y + yOffset, quad.pos[2].z * _width * _basesSize.z) + _origin - new Vector3(_length * _basesSize.x / 2f, _height * _basesSize.y / 2f, _width * _basesSize.z / 2f);
             Vector3 v4 = new Vector3(quad.pos[3].x * _length * _basesSize.x, quad.pos[3].y * _height * _basesSize.y + yOffset, quad.pos[3].z * _width * _basesSize.z) + _origin - new Vector3(_length * _basesSize.x / 2f, _height * _basesSize.y / 2f, _width * _basesSize.z / 2f);
                 
-            GenerateQuad(v1, v2, v3, v4);
-            AddQuadUVs(quad.uvs[0], quad.uvs[1], quad.uvs[2], quad.uvs[3]);
-        }
-
-        private void GenerateQuad(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
-        {
-            int index = _vertices.Count;
-            
-            // ADD VERTICES
-            _vertices.Add(v1);
-            _vertices.Add(v2);
-            _vertices.Add(v3);
-            _vertices.Add(v4);
-            
-            // ADD TRIANGLES
-            _triangles.Add(index);
-            _triangles.Add(index + 1);
-            _triangles.Add(index + 2);
-            
-            _triangles.Add(index);
-            _triangles.Add(index + 2);
-            _triangles.Add(index + 3);
-        }
-
-        private void AddQuadUVs(Vector2 uv1, Vector2 uv2, Vector2 uv3, Vector2 uv4)
-        {
-            _uvs.Add(uv1);
-            _uvs.Add(uv2);
-            _uvs.Add(uv3);
-            _uvs.Add(uv4);
+            ProceduralMesh.GenerateQuadAndAddVertices(_vertices, _triangles, v1, v2, v3, v4);
+            ProceduralMesh.AddQuadUVs(_uvs, quad.uvs[0], quad.uvs[1], quad.uvs[2], quad.uvs[3]);
         }
     }
 }
