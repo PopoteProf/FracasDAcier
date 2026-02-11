@@ -62,7 +62,7 @@ public class PlayerInteractor : MonoBehaviour {
     private void CheckForCurrentInteractable() {
         if( _interactables.Count==0) return;
         if (!_canInteract) {
-            foreach (var interactable in _interactables) {
+            foreach (IInteractable interactable in _interactables) {
                 interactable.SetIsPrimaryInteractable(false);
             }
         }
@@ -70,7 +70,7 @@ public class PlayerInteractor : MonoBehaviour {
         {
             float bestdistance = _interactables[0].GetToDistance(transform.position);
             IInteractable bestinteractable = _interactables[0];
-            foreach (var interactable in _interactables) {
+            foreach (IInteractable interactable in _interactables) {
                 if (interactable.GetToDistance(transform.position) < bestdistance) {
                     bestinteractable = interactable;
                     bestdistance = interactable.GetToDistance(transform.position);
