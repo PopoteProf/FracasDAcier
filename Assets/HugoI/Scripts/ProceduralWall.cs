@@ -9,6 +9,9 @@ namespace HugoI.Scripts
     public class ProceduralWall : MonoBehaviour
     {
         [Header("Settings")]
+        [SerializeField] private bool _realtimeGeneration;
+        
+        [Header("MeshData")]
         [SerializeField] private int _segmentCount = 10;
         [SerializeField] private float _width = 1f;
         [SerializeField] private float _height = 5f;
@@ -31,13 +34,13 @@ namespace HugoI.Scripts
 
         private void Update()
         {
-            GenerateWall();
+            if (_realtimeGeneration) GenerateWallMesh();
         }
 
         [ContextMenu("Generate Wall")]
-        private void GenerateWall()
+        private void GenerateWallMesh()
         {
-            // CLEAR
+            // INITIALIZE
             _vertices = new();
             _verticesFront = new();
             _verticesTop = new();

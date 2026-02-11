@@ -54,16 +54,16 @@ namespace HugoI.Scripts
                 }
             }
             
-            if (_realtimeGeneration) GenerateMesh();
+            if (_realtimeGeneration) GeneratePillarMesh();
         }
 
         [ContextMenu("Generate Mesh")]
-        private void GenerateMesh()
+        private void GeneratePillarMesh()
         {
-            // CLEAR
-            _vertices.Clear();
-            _triangles.Clear();
-            _uvs.Clear();
+            // INITIALIZE
+            _vertices = new();
+            _triangles = new();
+            _uvs = new();
             
             _mesh = new Mesh();
             _mesh.name = "ProceduralMesh";
