@@ -976,20 +976,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.Rendering.HighDefinition.ShaderGraph.LightingData",
-    "m_ObjectId": "173193020e334deba72bddba46f8bd6e",
-    "m_NormalDropOffSpace": 0,
-    "m_BlendPreserveSpecular": true,
-    "m_ReceiveDecals": true,
-    "m_ReceiveSSR": true,
-    "m_ReceiveSSRTransparent": false,
-    "m_SpecularAA": false,
-    "m_SpecularOcclusionMode": 1,
-    "m_OverrideBakedGI": false
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.TimeNode",
     "m_ObjectId": "17b4f18828a24ae08c2852b55eb3a723",
     "m_Group": {
@@ -2456,9 +2442,6 @@
         },
         {
             "m_Id": "91b8848feaf94f40aa1a144fc0db5707"
-        },
-        {
-            "m_Id": "173193020e334deba72bddba46f8bd6e"
         },
         {
             "m_Id": "c0379cf55e6f403c8eecb22eb5dd16e2"
