@@ -45,9 +45,9 @@ namespace HugoI.Scripts.Animation.Procedural
                 Vector3 currentFlat = new Vector3(transform.position.x, 0, transform.position.z);
 
                 float totalDistance = Vector3.Distance(startFlat, targetFlat);
-                float currentDistance = Vector3.Distance(startFlat, currentFlat);
+                float traveledDistance = Vector3.Distance(startFlat, currentFlat);
     
-                float t = totalDistance > 0.01f ? Mathf.Clamp01(currentDistance / totalDistance) : 1f;
+                float t = totalDistance > 0.01f ? Mathf.Clamp01(traveledDistance / totalDistance) : 1f;
     
                 // POSITION
                 Vector3 nextPos;
