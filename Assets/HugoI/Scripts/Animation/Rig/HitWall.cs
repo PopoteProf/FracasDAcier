@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace HugoI.Scripts.Animation
+namespace HugoI.Scripts.Animation.Rig
 {
     [ExecuteAlways]
     public class HitWall : MonoBehaviour

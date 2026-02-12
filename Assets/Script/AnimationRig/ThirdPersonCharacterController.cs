@@ -1,4 +1,5 @@
 ﻿using HugoI.Scripts.Animation;
+using HugoI.Scripts.Animation.Rig;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
