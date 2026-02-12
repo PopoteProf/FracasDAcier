@@ -16,7 +16,7 @@ public class MortardProjectil : Projectile
         if( _prfDebugArea)Instantiate(_prfDebugArea, hit.point, Quaternion.identity);
         
         GameObject go = Instantiate(_prfDeath, transform.position, Quaternion.identity);
-        go.transform.up = hit.normal;
+        // go.transform.up = hit.normal;
         Destroy(gameObject);
     }
 }
