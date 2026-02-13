@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5543438353371894466}
   - component: {fileID: 5740558095724754762}
   - component: {fileID: 6991815639616483751}
+  - component: {fileID: 9114276392363345189}
   m_Layer: 0
   m_Name: ProjectileMortar
   m_TagString: Untagged
@@ -226,6 +227,7 @@ MonoBehaviour:
   _rb: {fileID: 6991815639616483751}
   _damage: 0
   _prfDeath: {fileID: 5320863269476146034, guid: 266bc7301b02ce449a74164cbb66128f, type: 3}
+  _timeBeforeExplosion: 5
   _hitmask:
     serializedVersion: 2
     m_Bits: 0
@@ -257,4 +259,25 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
+--- !u!135 &9114276392363345189
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981409171539987222}
+  m_Material: {fileID: 13400000, guid: dbdb5c3315c9b144ea4c2655c2e88a71, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

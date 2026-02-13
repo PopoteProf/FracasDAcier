@@ -4,7 +4,9 @@ public class Projectile : MonoBehaviour {
     [SerializeField] protected Rigidbody _rb;
     [SerializeField] protected int _damage;
     [SerializeField] protected GameObject _prfDeath;
+    [SerializeField] protected float _timeBeforeExplosion = 5f;
     protected Vector3 _lastPos;
+    protected float _timer = 0f;
     public LayerMask _hitmask ;
     private Vector3 HitPoint;
     public virtual void SetUpProjectile(int damage, Vector3 force) 
@@ -14,25 +16,30 @@ public class Projectile : MonoBehaviour {
         _rb.AddForce(force, ForceMode.Impulse);
     }
 
-    protected virtual void Update() {
-        RaycastHit hit;
-        if (Physics.Raycast(new Ray(_lastPos, transform.position - _lastPos), out hit, (transform.position - _lastPos).magnitude)){
-            
-           Impact(hit);
-        }
+    protected virtual void Update()
+    {
+        // Timer
+        _timer += Time.deltaTime;
+        Impact();
+        
+        // RaycastHit hit;
+        // if (Physics.Raycast(new Ray(_lastPos, transform.position - _lastPos), out hit, (transform.position - _lastPos).magnitude)){
+        //     
+        //    Impact(hit);
+        // }
         _lastPos = transform.position;
         transform.forward = _rb.linearVelocity.normalized;
     }
 
-    protected virtual void Impact(RaycastHit hit)
+    protected virtual void Impact()
     {
         
-        if (hit.transform.GetComponent<IDamagable>() != null) {
-            hit.transform.GetComponent<IDamagable>().TakeDamage(_damage, hit.point, transform.position - _lastPos);
-        }
-        GameObject go = Instantiate(_prfDeath, transform.position, Quaternion.identity);
-        go.transform.up = hit.normal;
-       
-        Destroy(gameObject);
+        // if (hit.transform.GetComponent<IDamagable>() != null) {
+        //     hit.transform.GetComponent<IDamagable>().TakeDamage(_damage, hit.point, transform.position - _lastPos);
+        // }
+        // GameObject go = Instantiate(_prfDeath, transform.position, Quaternion.identity);
+        // go.transform.up = hit.normal;
+        //
+        // Destroy(gameObject);
     }
 }
