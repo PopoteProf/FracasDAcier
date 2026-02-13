@@ -13594,6 +13594,10 @@ PrefabInstance:
       value: 0.54496
       objectReference: {fileID: 0}
     - target: {fileID: 7468894744536441209, guid: 58c5e63fda29e274b92869d54ec9aa44, type: 3}
+      propertyPath: _prfMuzzleFire
+      value: 
+      objectReference: {fileID: 1713022027610379848, guid: e0ba867b5bfe83540944d2fd01df59b5, type: 3}
+    - target: {fileID: 7468894744536441209, guid: 58c5e63fda29e274b92869d54ec9aa44, type: 3}
       propertyPath: _visualEffects.Array.size
       value: 2
       objectReference: {fileID: 0}
