@@ -11562,6 +11562,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mecka
       objectReference: {fileID: 0}
+    - target: {fileID: 1071017726373476077, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
+      propertyPath: CollisionModule.m_Dampen.scalar
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1071017726373476077, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 3164014378493831607, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
       propertyPath: m_Data.m_Target
       value: 
