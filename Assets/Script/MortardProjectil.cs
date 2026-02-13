@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.VFX;
 
 public class MortardProjectil : Projectile
 {
+    [SerializeField] private VisualEffect _vfxSmoke;
     [SerializeField] private GameObject _prfDebugArea;
     [SerializeField] private float _explosionsRadius;
+
+    private bool _alreadyPlayedVFX = false;
 
     protected override void Impact()
     {
@@ -14,16 +18,22 @@ public class MortardProjectil : Projectile
 
         if (hitSomething)
         {
-            if (hit.transform.GetComponent<IDamagable>() != null) 
-            { 
-                hit.transform.GetComponent<IDamagable>().TakeDamage(_damage, hit.point, transform.position - _lastPos);
-            }
+            if (!_alreadyPlayedVFX)
+            {
+                if (hit.transform.GetComponent<IDamagable>() != null) 
+                { 
+                    hit.transform.GetComponent<IDamagable>().TakeDamage(_damage, hit.point, transform.position - _lastPos);
+                }
             
-            if( _prfDebugArea)Instantiate(_prfDebugArea, hit.point, Quaternion.identity);
+                if( _prfDebugArea)Instantiate(_prfDebugArea, hit.point, Quaternion.identity);
         
-            GameObject go = Instantiate(_prfDeath, transform.position, Quaternion.identity);
+                GameObject go = Instantiate(_prfDeath, transform.position, Quaternion.identity);
+                
+                _alreadyPlayedVFX = true;
+            }
             // go.transform.up = hit.normal;
-            Destroy(gameObject);
+            _vfxSmoke.Stop();
+            Destroy(gameObject, 1.5f);
         }
         
         // foreach (var coll in Physics.OverlapSphere(hit.point, _explosionsRadius)) {
