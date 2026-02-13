@@ -111,6 +111,8 @@ public class LegLocomotorIK : MonoBehaviour {
         if (_usSpawnVFXAtFeet&& _prfFootImpact != null)  {
             GameObject go = Instantiate(_prfFootImpact, _footTarget.position, Quaternion.identity);
             go.transform.forward = Vector3.up;
+
+            Destroy(go, 2f);
         }
     }
 

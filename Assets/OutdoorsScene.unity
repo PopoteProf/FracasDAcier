@@ -7381,11 +7381,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83093487f3cb97847ad709f4a65f8f25, type: 3}
---- !u!198 &1636205897 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4728554669640743051, guid: 83093487f3cb97847ad709f4a65f8f25, type: 3}
-  m_PrefabInstance: {fileID: 1636205896}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1636205898 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6862229834465276286, guid: 83093487f3cb97847ad709f4a65f8f25, type: 3}
@@ -11313,63 +11308,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3607a21738baf84458d6c9ab84652b50, type: 3}
---- !u!1001 &3206222411335096222
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3037148824303077054, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.93
-      objectReference: {fileID: 0}
-    - target: {fileID: 3037148824303077054, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4801
-      objectReference: {fileID: 0}
-    - target: {fileID: 3037148824303077054, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 3037148824303077054, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3037148824303077054, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3037148824303077054, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3037148824303077054, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3037148824303077054, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3037148824303077054, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3037148824303077054, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365629395431632400, guid: 11f131dba353f444e811831bbae62c55, type: 3}
-      propertyPath: m_Name
-      value: VFX_TurretDestruction
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 11f131dba353f444e811831bbae62c55, type: 3}
 --- !u!1001 &3318989171119061370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11587,6 +11525,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1004383118}
     - target: {fileID: 3922816314687952665, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
+      propertyPath: _prfFootImpact
+      value: 
+      objectReference: {fileID: 9183572784635049074, guid: 5f6436ff6abfa07469433fcfa5640c41, type: 3}
+    - target: {fileID: 3922816314687952665, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
+      propertyPath: _usSpawnVFXAtFeet
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922816314687952665, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
       propertyPath: _groundLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -11597,7 +11543,7 @@ PrefabInstance:
     - target: {fileID: 3922816314687952665, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
       propertyPath: _particleSystemFootStep
       value: 
-      objectReference: {fileID: 1636205897}
+      objectReference: {fileID: 0}
     - target: {fileID: 3922816314687952665, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
       propertyPath: _raycasterAmplitudeMode
       value: 0.8
@@ -12514,4 +12460,3 @@ SceneRoots:
   - {fileID: 1534687387}
   - {fileID: 9333434}
   - {fileID: 971434739}
-  - {fileID: 3206222411335096222}
