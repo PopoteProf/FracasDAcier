@@ -226,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   _rb: {fileID: 6991815639616483751}
   _damage: 0
-  _prfDeath: {fileID: 9149080009090224474, guid: 0f991d988079ee242bdc05ffae0449ee, type: 3}
+  _prfDeath: {fileID: 8756478499988721303, guid: 2705ae80661d47741860c8c5046cc8da, type: 3}
   _prfDebugArea: {fileID: 3184022539344638800, guid: 651c349add7a3fb41a5f0f031524efcc, type: 3}
   _explosionsRadius: 2
 --- !u!54 &6991815639616483751
