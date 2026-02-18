@@ -1,14 +1,15 @@
 fileFormatVersion: 2
-guid: cc2eaac99834caa4a85e73bd66094d1a
+guid: 827a90efcdc7382448320d036d2835cc
 VisualEffectImporter:
   externalObjects: {}
-  serializedVersion: 1
+  serializedVersion: 2
   template:
     name: 
     category: 
     description: 
     icon: {instanceID: 0}
     thumbnail: {instanceID: 0}
+  useAsTemplate: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
