@@ -18,12 +18,17 @@ public class LegLocomotorIK : MonoBehaviour {
     [SerializeField] private float _raycasterSpringSize =1;
     [SerializeField] private float _raycasterPringSpeed =1;
     [SerializeField] private AnimationCurve _raycasterSpringMod = AnimationCurve.EaseInOut(0,0,1,1);
-    [Space(5)]
     [SerializeField] private Transform _footTarget;
-
+    
+    [Space(10)]
+    [Header("VFXPart")]
     [SerializeField] private CinemachineImpulseSource _impulseSource;
+    [SerializeField] private bool _usPlayParticuleSystem= true;
     [SerializeField] private ParticleSystem _particleSystemFootStep;
-
+    [SerializeField] private bool _usSpawnVFXAtFeet;
+    [SerializeField] private GameObject _prfFootImpact;
+    
+    [Space(10)]
     [SerializeField] private bool _DrawDebug;
 
     private bool _legMoveLock;
@@ -99,8 +104,14 @@ public class LegLocomotorIK : MonoBehaviour {
         _lastPos = _newPos;
         _footTarget.position = _newPos;
         OnLegEndMouvement?.Invoke(this, EventArgs.Empty);
+        
+        
         if( _impulseSource)_impulseSource.GenerateImpulse();
-        if (_particleSystemFootStep) _particleSystemFootStep.Play();
+        if (_usPlayParticuleSystem &&_particleSystemFootStep!=null) _particleSystemFootStep.Play();
+        if (_usSpawnVFXAtFeet&& _prfFootImpact != null)  {
+            GameObject go = Instantiate(_prfFootImpact, _footTarget.position, Quaternion.identity);
+            go.transform.forward = Vector3.up;
+        }
     }
 
     private void RayCasterPos() {

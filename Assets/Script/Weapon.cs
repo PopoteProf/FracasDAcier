@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using Unity.Cinemachine;
+using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
     [SerializeField]protected Transform _firePoint;
     [SerializeField]protected LineRenderer _aimLineRenderer;
+    [SerializeField]protected CinemachineImpulseSource _fireImpulseSource;
+    [SerializeField]protected GameObject _prfMuzzleFire;
 
     protected RaycastHit hit;
     protected bool _isEquipe;
