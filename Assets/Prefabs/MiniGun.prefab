@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 7922806744352552284}
   - component: {fileID: 1361067890688273857}
   - component: {fileID: 9014261468254340321}
-  - component: {fileID: 4521795608043737881}
+  - component: {fileID: 8032697912551897955}
   m_Layer: 7
   m_Name: MiniGun
   m_TagString: Untagged
@@ -323,7 +323,7 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &4521795608043737881
+--- !u!114 &8032697912551897955
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -334,12 +334,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f8498942f0e4be2bda2a0bf7a1bbec0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LaserGun
+  m_EditorClassIdentifier: Assembly-CSharp::MiniGun
   _firePoint: {fileID: 690942395285959874}
   _aimLineRenderer: {fileID: 9014261468254340321}
-  _defaultLazerColor: {r: 1, g: 0, b: 0, a: 1}
-  _fireLazerColor: {r: 0, g: 0.18643188, b: 1, a: 1}
-  _damage: 1
+  _defaultLazerColor: {r: 0, g: 0, b: 0, a: 0}
+  _fireLazerColor: {r: 0, g: 0, b: 0, a: 0}
+  _damage: 2
   _prfProjectile: {fileID: 5740558095724754762, guid: e2fcd5fb6dcba5c41bd2b4ff6311fccb, type: 3}
   _projectileSpeed: 50
   _fireRate: 3
