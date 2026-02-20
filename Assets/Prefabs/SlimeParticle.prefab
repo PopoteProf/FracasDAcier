@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6663564425951710872}
   - component: {fileID: 7064393423575203011}
   - component: {fileID: 2190927729129005956}
+  - component: {fileID: 875334157814823012}
   m_Layer: 7
   m_Name: SlimeParticle
   m_TagString: SlimeBall
@@ -109,9 +110,13 @@ MonoBehaviour:
   _timeBeforGlue: 0.5
   _visualEffect: {fileID: 7064393423575203011}
   radius: 0.5
-  wallLayer:
+  layerIngnor:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
+  FallingSpeed: 5
+  SlidingSpeed: 0.2
+  TimeBeforDestroy: 5
+  Currentime: 0
 --- !u!2083052967 &7064393423575203011
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -199,3 +204,30 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!54 &875334157814823012
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170124548351371045}
+  serializedVersion: 5
+  m_Mass: 0.2
+  m_LinearDamping: 0
+  m_AngularDamping: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -15,18 +16,52 @@ namespace Script
         public float radius = 0.5f;
         public LayerMask layerIngnor;
 
+        public float FallingSpeed;
+        public float SlidingSpeed;
+        
+        public float TimeBeforDestroy;
+        public float Currentime;
         private void Start()
         {
             _lastPos = transform.position;
             _scale = transform.localScale;
         }
-        private void OnTriggerEnter(Collider other)
+
+        private void OnTriggerExit(Collider other)
         {
-            
+            Debug.Log(other.gameObject.name);
         }
 
         protected void Update()
         {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 0.2f);
+            Vector3 startPos = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
+            Debug.DrawLine(startPos, new Vector3(transform.position.x, transform.position.y - 0.08f, transform.position.z), Color.blue, Time.deltaTime);
+            if (colliders.Length > 0 && !Physics.Linecast(transform.position, new Vector3(transform.position.x, transform.position.y - 0.08f, transform.position.z)))
+            {
+                Vector3 position = transform.position;
+                position = new Vector3(position.x, position.y -= SlidingSpeed * Time.deltaTime, position.z);
+                transform.position = position;
+            }
+            else if (!Physics.Linecast(transform.position, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)))
+            {
+                Vector3 position = transform.position;
+                position = new Vector3(position.x, position.y -= FallingSpeed * Time.deltaTime, position.z);
+                transform.position = position;
+            }
+
+            Currentime += Time.deltaTime;
+            if (Currentime >= TimeBeforDestroy)
+            {
+                Vector3 scale = transform.localScale;
+                scale = new Vector3(scale.x -= 0.08f * Time.deltaTime, scale.y -= 0.08f * Time.deltaTime, scale.z -= 0.08f * Time.deltaTime);
+                transform.localScale = scale;
+                if (scale.x <= 0)
+                {
+                    Destroy(gameObject);
+                }
+            }
+            
             if (_isGlue) return;
             
             RaycastHit hit;
