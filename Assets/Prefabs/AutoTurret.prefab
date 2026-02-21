@@ -88,6 +88,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1655914170869968927
 GameObject:
@@ -178,6 +179,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1692825670775775524
 GameObject:
@@ -270,6 +272,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1859997982179949017
 GameObject:
@@ -359,6 +362,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2046309794564011227
 GameObject:
@@ -479,6 +483,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7101790293729621018
 GameObject:
@@ -535,7 +540,7 @@ MonoBehaviour:
   _bodyrotationThreshold: 0.98
   _canonRotationThreshold: 0.97
   _hp: 5
-  _prfDeathGameObject: {fileID: 0}
+  _prfDeathGameObject: {fileID: 855212909455231849, guid: 2f98d73b139d88541a763a2d707b5084, type: 3}
   _transformcannon1: {fileID: 2886321124921878175}
   _transformcannon2: {fileID: 3265183489580044414}
   _projectileDamage: 1
@@ -657,6 +662,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &9071927519160696904
 GameObject:
