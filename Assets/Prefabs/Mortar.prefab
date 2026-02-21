@@ -66,6 +66,7 @@ Transform:
   m_Children:
   - {fileID: 2913536862130188683}
   - {fileID: 6426284564812568452}
+  - {fileID: 2427902503449907442}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3668819112829643600
@@ -123,10 +124,11 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!120 &8579625070439662418
 LineRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -172,6 +174,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Positions:
   - {x: 0.16, y: 1.2, z: 0.25}
   - {x: 0.16000001, y: 1.2, z: 9.03}
@@ -230,7 +233,6 @@ LineRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MaskInteraction: 0
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
@@ -248,6 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LaserGun
   _firePoint: {fileID: 2913536862130188683}
   _aimLineRenderer: {fileID: 8579625070439662418}
+  _fireImpulseSource: {fileID: 0}
+  _prfMuzzleFire: {fileID: 567620849432227082}
   _defaultLazerColor: {r: 1, g: 0, b: 0, a: 1}
   _fireLazerColor: {r: 0, g: 0.18643188, b: 1, a: 1}
   _damage: 4
@@ -341,4 +345,72 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &6185424725578017068
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5072019622173002036}
+    m_Modifications:
+    - target: {fileID: 5924365615937455142, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_Name
+      value: MuzzleFlash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.373238
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.369953
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+--- !u!1 &567620849432227082 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5924365615937455142, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+  m_PrefabInstance: {fileID: 6185424725578017068}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2427902503449907442 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8387584263332510174, guid: a121d5412a62b784ba8a85fbe9a57230, type: 3}
+  m_PrefabInstance: {fileID: 6185424725578017068}
+  m_PrefabAsset: {fileID: 0}
