@@ -4904,7 +4904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7469787172718469353}
   m_Layer: 0
-  m_Name: ExplosionTourelleVFFX
+  m_Name: ExplosionTourelleVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
