@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LaserGun : Weapon
 {
@@ -15,14 +16,8 @@ public class LaserGun : Weapon
         _aimLineRenderer.endColor =_defaultLazerColor;
     }
 
-    
-    
-    public override void StartClick() {
-        if( _prfFireImpact){ 
-            GameObject go = Instantiate(_prfFireImpact, hit.point, Quaternion.identity);
-            go.transform.up = hit.normal;
-        }
-
+    private void FixedUpdate()
+    {
         if (hit.collider.GetComponent<IDamagable>() != null) {
             IDamagable target = hit.collider.GetComponent<IDamagable>();
             target.TakeDamage(_damage, hit.point, hit.normal);
@@ -30,6 +25,20 @@ public class LaserGun : Weapon
         _aimLineRenderer.startColor =_fireLazerColor;
         _aimLineRenderer.endColor =_fireLazerColor;
     }
+
+    // public override void StartClick() {
+    //     if( _prfFireImpact){ 
+    //         GameObject go = Instantiate(_prfFireImpact, hit.point, Quaternion.identity);
+    //         go.transform.up = hit.normal;
+    //     }
+    //
+    //     if (hit.collider.GetComponent<IDamagable>() != null) {
+    //         IDamagable target = hit.collider.GetComponent<IDamagable>();
+    //         target.TakeDamage(_damage, hit.point, hit.normal);
+    //     }
+    //     _aimLineRenderer.startColor =_fireLazerColor;
+    //     _aimLineRenderer.endColor =_fireLazerColor;
+    // }
 
     public override void StopClick()
     {

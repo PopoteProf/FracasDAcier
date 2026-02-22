@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class LegLocomotorIK : MonoBehaviour {
     
@@ -22,7 +23,7 @@ public class LegLocomotorIK : MonoBehaviour {
     [SerializeField] private Transform _footTarget;
 
     [SerializeField] private CinemachineImpulseSource _impulseSource;
-    [SerializeField] private ParticleSystem _particleSystemFootStep;
+    [SerializeField] private VisualEffect _particleSystemFootStep;
 
     [SerializeField] private bool _DrawDebug;
 

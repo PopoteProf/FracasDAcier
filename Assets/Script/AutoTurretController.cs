@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class AutoTurretController : MonoBehaviour , IDamagable
@@ -17,6 +18,7 @@ public class AutoTurretController : MonoBehaviour , IDamagable
 
     [Header("Life Parameters")]
     [SerializeField] private float _hp =5;
+    [SerializeField] private VisualEffect _fireVisualEffect;
     [SerializeField] private GameObject _prfDeathGameObject;
 
     [Header("Fire Parameters")] 
@@ -28,9 +30,9 @@ public class AutoTurretController : MonoBehaviour , IDamagable
     [SerializeField] private float _fireRate = 1;
     [SerializeField] private Projectile _prfProjectile;
     [SerializeField] private float _agroRange = 15f;
-    
 
 
+    private float _initialHp;
     private Vector3 _targetVector { get => _target.position - _transformBody.position; }
     private Vector3 _targetVectorToCanon { get => _target.position - _transformCannons.position; }
     private bool _targetIsInRange { get => _targetVectorToCanon.magnitude < _agroRange; }
@@ -41,6 +43,8 @@ public class AutoTurretController : MonoBehaviour , IDamagable
 
     void Start()
     {
+        _initialHp = _hp;
+        _fireVisualEffect.Stop();
         _fireTimer = new PopoteTimer(_fireRate / 1f);
         _fireTimer.Play();
         _fireTimer.OnTimerEnd += OnFireTimerEnd;
@@ -123,6 +127,12 @@ public class AutoTurretController : MonoBehaviour , IDamagable
 
     public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal) {
         _hp-=damage;
+
+        if (_initialHp/2 <= _hp)
+        {
+            _fireVisualEffect.Play();
+        }
+        
         if (_hp <= 0) {
             if (_prfDeathGameObject != null) {
                 Instantiate(_prfDeathGameObject, transform.position, Quaternion.identity);
