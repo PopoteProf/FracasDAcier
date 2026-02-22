@@ -11434,6 +11434,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 3318989171119061372}
     m_Modifications:
     - target: {fileID: 2163766841680201430, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
+      propertyPath: _preFireDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2163766841680201430, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
       propertyPath: _prfLazerBeam
       value: 
       objectReference: {fileID: 1900907392557782051, guid: 4a2f9064b8fc9cc4d819d933e9e8fdc2, type: 3}
@@ -11444,6 +11448,10 @@ PrefabInstance:
     - target: {fileID: 2163766841680201430, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
       propertyPath: _prfMuzzleFire
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2163766841680201430, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
+      propertyPath: _usPreFireDelay
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2163766841680201430, guid: 9f9f75654f22b2242b6f1c3060c31e96, type: 3}
       propertyPath: _usConstantDamageTick

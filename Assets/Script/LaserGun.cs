@@ -64,7 +64,7 @@ public class LaserGun : Weapon
         if (_prfLazerBeam != null)
         {
              GameObject lazer = Instantiate(_prfLazerBeam, transform);
-             Destroy(lazer, 3f);
+             Destroy(lazer, 11f);
         }
 
         if (_prfMuzzleFire != null) Instantiate(_prfMuzzleFire, _firePoint.position,_firePoint.rotation);
