@@ -11,6 +11,7 @@ public class LaserGun : Weapon
     [SerializeField, ColorUsage(true, true)] private Color _defaultLazerColor;
     [SerializeField, ColorUsage(true, true)] private Color _fireLazerColor;
     [SerializeField] private GameObject _prfFireImpact;
+    [SerializeField] private GameObject _prfLazerBeam;
     [SerializeField] private int _damage =1;
     
     private bool _isFire;
@@ -60,6 +61,12 @@ public class LaserGun : Weapon
 
     private void DoFire()
     {
+        if (_prfLazerBeam != null)
+        {
+             GameObject lazer = Instantiate(_prfLazerBeam, transform);
+             Destroy(lazer, 3f);
+        }
+
         if (_prfMuzzleFire != null) Instantiate(_prfMuzzleFire, _firePoint.position,_firePoint.rotation);
         if( _fireImpulseSource!=null)_fireImpulseSource.GenerateImpulse();
         if( _prfFireImpact){ 
