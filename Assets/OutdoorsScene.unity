@@ -3425,7 +3425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &971434736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11881,12 +11881,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1126350152}
     - target: {fileID: 7086328612769205226, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
+      propertyPath: _prfFootImpact
+      value: 
+      objectReference: {fileID: 9183572784635049074, guid: 5f6436ff6abfa07469433fcfa5640c41, type: 3}
+    - target: {fileID: 7086328612769205226, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
+      propertyPath: _usSpawnVFXAtFeet
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086328612769205226, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
       propertyPath: _groundLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 7086328612769205226, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
       propertyPath: _raycasterSpringSize
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086328612769205226, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
+      propertyPath: _particleSystemFootStep
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7086328612769205226, guid: 07e3e6a647d8ed14dae1c7225d648a13, type: 3}
       propertyPath: _raycasterAmplitudeMode
