@@ -1,7 +1,10 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.VFX;
 
 public class RototController : MonoBehaviour, IDamagable
 {
@@ -15,6 +18,11 @@ public class RototController : MonoBehaviour, IDamagable
     //[SerializeField] private Collider[] _colliders;
 
     [Header("CannonParameters")] [SerializeField] private Transform _cannon;
+    
+    [Header("VFX")] 
+    [SerializeField] private GameObject _weaponsSwapVFX;
+    [SerializeField] private Transform _canonTransform;
+    [SerializeField] private VisualEffectAsset  _visualEffect;
     
     [SerializeField] private Weapon[] _weapons;
 
@@ -37,8 +45,22 @@ public class RototController : MonoBehaviour, IDamagable
 
     private void ManageWeaponSwitch(InputAction.CallbackContext obj) {
         Debug.Log("Switch gun");
-        if (_currenWeaponID+1>=_weapons.Length) SelectWeapon(0);
-        else SelectWeapon(_currenWeaponID+1);
+    
+        // Spawn VFX immediately
+        GameObject ws = Instantiate(_weaponsSwapVFX, _canonTransform);
+        Destroy(ws, 2f);
+    
+        // Delay the actual weapon swap
+        StartCoroutine(SwapWeaponAfterDelay());
+    }
+
+    private IEnumerator SwapWeaponAfterDelay() {
+        yield return new WaitForSeconds(1f);
+    
+        if (_currenWeaponID + 1 >= _weapons.Length) 
+            SelectWeapon(0);
+        else 
+            SelectWeapon(_currenWeaponID + 1);
     }
 
     void Update() {
