@@ -13,6 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHABLEND_ON
+  - _EMISSION
   m_InvalidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _NORMALMAP_TANGENT_SPACE
@@ -184,7 +185,7 @@ Material:
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 10
     - _DstBlend2: 0
-    - _EmissionEnabled: 0
+    - _EmissionEnabled: 1
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
     - _EmissiveIntensity: 131072.02
@@ -274,11 +275,11 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 3.6886053, g: 3.6886053, b: 3.6886053, a: 1}
+    - _Color: {r: 14.736495, g: 4.7933493, b: 1.7377939, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 5.2164755, g: 0.9093964, b: 0, a: 1}
     - _EmissiveColor: {r: 2.670157, g: 2.670157, b: 2.670157, a: 131072.02}
     - _EmissiveColorLDR: {r: 0.88031507, g: 0.8543429, b: 0.49391657, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
