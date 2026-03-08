@@ -7,7 +7,7 @@ public class LocomotorBrainIK : MonoBehaviour
     [SerializeField] private LegLocomotorIK[] _legLocomotorIks;
 
     private int _currentLegMove;
-    private void Start() {
+    private void Awake() {
         foreach (var leg in _legLocomotorIks) {
             if( leg==null) continue;
             leg.OnLegStartMouvement += LegOnOnLegStartMouvement;

@@ -1,7 +1,8 @@
 ﻿using Unity.Cinemachine;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class NetWeapon : NetworkBehaviour
 {
     [SerializeField]protected Transform _firePoint;
     [SerializeField]protected LineRenderer _aimLineRenderer;

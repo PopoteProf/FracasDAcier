@@ -51,7 +51,6 @@ public class ChatBoxManager : MonoBehaviour
         
         Invoke("SetTextToBot", 0.1f);
     }
-    
     public void SetupDropdownTargets(stringContainer[] targets) {
         List<string > targetNames = new List<string>();
         
@@ -75,7 +74,6 @@ public class ChatBoxManager : MonoBehaviour
             SetCurrentTarget(-1);
         }
     }
-
     public void SetCurrentUser(string userName) {
         _txtLabel.text = "User : " + userName;
         _currentPlayerName = userName;
@@ -87,7 +85,6 @@ public class ChatBoxManager : MonoBehaviour
         ChatBoxMessage message = new ChatBoxMessage( "All",3,"Hello","Popote");
         DisplayMessage(message);
     }
-
     private void SetUpDropdownColors() {
         _dropdownColors.ClearOptions();
         List<TMP_Dropdown.OptionData>options = new List<TMP_Dropdown.OptionData>();
@@ -95,7 +92,6 @@ public class ChatBoxManager : MonoBehaviour
             options.Add(new TMP_Dropdown.OptionData("",_spriteDropdownColor, color)); }
         _dropdownColors.AddOptions(options);
     }
-    
     private void SetCurrentTarget(int index) {
         if (index == -1) {
             _currentTarget = "All";
@@ -103,11 +99,9 @@ public class ChatBoxManager : MonoBehaviour
         }
         _currentTarget = _playerNames[index-1];
     }
-
     private void SetCurrentColor(int colorId) {
         _currentSelectionColor = colorId;
     }
-
     private void SubmitTestFromInputField(string input) {
         UISendMessage();
     }
@@ -117,12 +111,10 @@ public class ChatBoxManager : MonoBehaviour
         _inputField.text = "";
        OnMessageSend?.Invoke(this, message);
     }
-    
     private void SetTextToBot() {
         LayoutRebuilder.ForceRebuildLayoutImmediate((_textHolder as RectTransform));
         _scrollRect.normalizedPosition = new Vector2(0, 0);
     }
-
     private Color GetColorById(int id) {
         if (_colors.Length > id) return _colors[id];
         return Color.black;

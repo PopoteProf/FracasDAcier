@@ -36,7 +36,8 @@ public class LegLocomotorIK : MonoBehaviour {
     private Vector3 _hit;
     private Vector3 _newPos;
     private Vector3 _lastPos;
-    private Vector3 _lastVelocityPos; 
+    private Vector3 _lastVelocityPos;
+    private Vector3 _targetPos;
     private float _timer;
     private bool _isMoving;
 
@@ -58,17 +59,32 @@ public class LegLocomotorIK : MonoBehaviour {
        // _velocity = velocity;
     }
 
+    private void Awake() {
+        RaycastHit hit;
+        if (Physics.Raycast(_rayCaster.position, _rayCaster.forward, out hit, Mathf.Infinity, _groundLayer)) {
+            //if (Vector3.Distance(_lastPos, hit.point) > _legMoveThreshold) {
+            //    _lastVelocityPos = hit.point;
+            //    _targetPos = hit.point;
+            //}
+            _lastVelocityPos = hit.point;
+            _targetPos = hit.point;
+        }
+    }
+
     private void Start() {
-        _lastVelocityPos = transform.position;
+        
+        
     }
 
     public void Update() {
+        _footTarget.position = _targetPos;
         CalculateVelocity();
         RayCasterPos();
         if (_isMoving) {
             ManagerLegMovement();
             return;
         }
+        
         if(_legMoveLock)return;
         
         //_rayCaster.position = transform.position +_velocity*_raycasterAmplitudeMode;
@@ -93,7 +109,7 @@ public class LegLocomotorIK : MonoBehaviour {
         float t = _timer / _legStepSpeed;
         Vector3 feetPos = Vector3.Lerp(_lastPos, _newPos, t);
         feetPos.y = (Mathf.Lerp(_lastPos.y, _newPos.y, _legHeightCurve.Evaluate(t) ))+_legHeightApex*_legHeightCurve.Evaluate(t);
-        _footTarget.position = feetPos;
+        _targetPos = feetPos;
         if (_timer >= _legStepSpeed) {
             EndLegMovement();
         }
@@ -102,14 +118,14 @@ public class LegLocomotorIK : MonoBehaviour {
     private void EndLegMovement() {
         _isMoving = false;
         _lastPos = _newPos;
-        _footTarget.position = _newPos;
+        _targetPos = _newPos;
         OnLegEndMouvement?.Invoke(this, EventArgs.Empty);
         
         
         if( _impulseSource)_impulseSource.GenerateImpulse();
         if (_usPlayParticuleSystem &&_particleSystemFootStep!=null) _particleSystemFootStep.Play();
         if (_usSpawnVFXAtFeet&& _prfFootImpact != null)  {
-            GameObject go = Instantiate(_prfFootImpact, _footTarget.position, Quaternion.identity);
+            GameObject go = Instantiate(_prfFootImpact, _targetPos, Quaternion.identity);
             go.transform.forward = Vector3.up;
         }
     }

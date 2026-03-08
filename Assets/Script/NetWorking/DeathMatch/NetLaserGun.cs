@@ -1,7 +1,9 @@
 ﻿using System;
+using NUnit.Framework.Constraints;
+using Unity.Netcode;
 using UnityEngine;
 
-public class LaserGun : Weapon
+public class NetLaserGun : NetWeapon
 {
     [SerializeField] private bool _usPreFireDelay;
     [SerializeField] private float _preFireDelay = 0.5f;
@@ -17,8 +19,7 @@ public class LaserGun : Weapon
     private PopoteTimer _preFireTimer;
     private PopoteTimer _damageTickTimer;
 
-    private void Awake()
-    {
+    private void Awake() {
         _preFireTimer = new PopoteTimer(_preFireDelay);
         _preFireTimer.OnTimerEnd+= OnPreFireTimerEnd;
         _damageTickTimer = new PopoteTimer(1/_damgeTickPerSecond);
@@ -26,16 +27,16 @@ public class LaserGun : Weapon
     }
 
     private void OnDamageTickTimerEnd(object sender, EventArgs e) {
-        DoDamage();
+        DoDamageRpc();
     }
 
     private void OnPreFireTimerEnd(object sender, EventArgs e) {
-        DoFire();
-    }
+        DoFireRpc(); }
 
     void Start() {
         _aimLineRenderer.startColor =_defaultLazerColor;
         _aimLineRenderer.endColor =_defaultLazerColor;
+
     }
 
     protected override void Update()
@@ -54,19 +55,27 @@ public class LaserGun : Weapon
         }
         else
         {
-            DoFire();
+            DoFireRpc();
         }
     }
 
-    private void DoFire()
+    
+    [Rpc(SendTo.Server)]
+    private void DoFireRpc(
+        RpcDelivery rpcDelivery  = RpcDelivery.Reliable,
+        RpcInvokePermission rpcInvokePermission = RpcInvokePermission.Everyone,
+        LocalDeferMode localDeferMode = LocalDeferMode.Default
+        )
     {
+        if( !IsServer&&!IsHost)return;
         if (_prfMuzzleFire != null) Instantiate(_prfMuzzleFire, _firePoint.position,_firePoint.rotation);
         if( _fireImpulseSource!=null)_fireImpulseSource.GenerateImpulse();
-        if( _prfFireImpact){ 
-            GameObject go = Instantiate(_prfFireImpact, hit.point, Quaternion.identity);
-            go.transform.up = hit.normal;
-        }
-
+        PlayHitVFXRpc(hit.point, hit.normal);
+        //if( _prfFireImpact){ 
+        //    GameObject go = Instantiate(_prfFireImpact, hit.point, Quaternion.identity);
+        //    go.transform.up = hit.normal;
+        //}
+        if (hit.collider == null) return;
         if (hit.collider.GetComponentInParent<IDamagable>() != null) {
             IDamagable target = hit.collider.GetComponentInParent<IDamagable>();
             target.TakeDamage(_damage, hit.point, hit.normal);
@@ -76,7 +85,8 @@ public class LaserGun : Weapon
         if(_usConstantDamageTick){ _damageTickTimer.Play();}
     }
 
-    private void DoDamage()
+    [Rpc(SendTo.Server)]
+    private void DoDamageRpc()
     {
         if (hit.collider.GetComponentInParent<IDamagable>() != null) {
             IDamagable target = hit.collider.GetComponentInParent<IDamagable>();
@@ -88,6 +98,14 @@ public class LaserGun : Weapon
         }
         _damageTickTimer.Play();
     }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void PlayHitVFXRpc(Vector3 pos, Vector3 normal) {
+        if( _prfFireImpact){ 
+            GameObject go = Instantiate(_prfFireImpact, pos, Quaternion.identity);
+            go.transform.up = normal;
+        }
+    }
     
 
     public override void StopClick()
@@ -98,3 +116,4 @@ public class LaserGun : Weapon
         _damageTickTimer.Pause();
     }
 }
+

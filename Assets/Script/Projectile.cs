@@ -24,11 +24,9 @@ public class Projectile : MonoBehaviour {
         transform.forward = _rb.linearVelocity.normalized;
     }
 
-    protected virtual void Impact(RaycastHit hit)
-    {
-        
-        if (hit.transform.GetComponent<IDamagable>() != null) {
-            hit.transform.GetComponent<IDamagable>().TakeDamage(_damage, hit.point, transform.position - _lastPos);
+    protected virtual void Impact(RaycastHit hit) {
+        if (hit.transform.GetComponentInParent<IDamagable>() != null) {
+            hit.transform.GetComponentInParent<IDamagable>().TakeDamage(_damage, hit.point, transform.position - _lastPos);
         }
         GameObject go = Instantiate(_prfDeath, transform.position, Quaternion.identity);
         go.transform.up = hit.normal;

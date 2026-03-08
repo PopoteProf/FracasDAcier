@@ -1,7 +1,8 @@
+﻿using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class RototController : MonoBehaviour
+public class NetRototController : NetworkBehaviour
 {
     [SerializeField] private bool _isActivePlayer;
     [SerializeField] private float _moveSpeed;
@@ -9,9 +10,9 @@ public class RototController : MonoBehaviour
     [SerializeField] private Camera _camera;
     [Header("CannonParameters")] [SerializeField] private Transform _cannon;
     
-    [SerializeField] private Weapon[] _weapons;
+    [SerializeField] private NetWeapon[] _weapons;
 
-    private Weapon _currentWeapon;
+    private NetWeapon _currentWeapon;
     private int _currenWeaponID;
     private bool _isFire;
 
@@ -19,11 +20,17 @@ public class RototController : MonoBehaviour
     RaycastHit hit;
     private InputAction _tabAction;
 
+    public NetworkVariable<int> _weaponID = new NetworkVariable<int>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     public void Start() {
         foreach (var weapon in _weapons) {
             weapon.ChangeSelection(false);
         }
         SelectWeapon(0);
+        
+        if (_currenWeaponID != _weaponID.Value) {
+            SelectWeapon(_weaponID.Value);
+        }
         if (!_isActivePlayer)return;
         _tabAction =InputSystem.actions.FindAction("Tab");
         _tabAction.started += ManageWeaponSwitch;
@@ -31,8 +38,12 @@ public class RototController : MonoBehaviour
 
     private void ManageWeaponSwitch(InputAction.CallbackContext obj) {
         Debug.Log("Switch gun");
-        if (_currenWeaponID+1>=_weapons.Length) SelectWeapon(0);
-        else SelectWeapon(_currenWeaponID+1);
+        
+        //if (_currenWeaponID+1>=_weapons.Length) SelectWeapon(0);
+        //else SelectWeapon(_currenWeaponID+1);
+        
+        if (_currenWeaponID+1>=_weapons.Length) _weaponID.Value = 0;
+        else _weaponID.Value = _currenWeaponID+1;
     }
 
     void Update() {
@@ -46,6 +57,7 @@ public class RototController : MonoBehaviour
         if (Physics.Raycast(_camera.ScreenPointToRay(Mouse.current.position.value),  out hit)) {
             _cannon.forward = hit.point - _cannon.position;
         }
+        
         
     }
 
@@ -71,4 +83,29 @@ public class RototController : MonoBehaviour
         _currenWeaponID = id;
         _currentWeapon.ChangeSelection(true);
     }
+
+    public void SetUpElement() {
+        _isActivePlayer = true;
+        _camera = Camera.main;
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        _weaponID.OnValueChanged+= OnWeaponValueChanged;
+        SelectWeapon(_weaponID.Value);
+        base.OnNetworkSpawn();
+    }
+    
+
+    public override void OnNetworkDespawn()
+    {
+        _weaponID.OnValueChanged -= OnWeaponValueChanged;
+        base.OnNetworkDespawn();
+    } 
+    
+    private void OnWeaponValueChanged(int previousValue, int newValue) {
+       SelectWeapon(newValue); 
+    }
+    
+    
 }
