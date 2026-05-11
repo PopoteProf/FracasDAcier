@@ -59,7 +59,17 @@ public class LegLocomotorIK : MonoBehaviour {
        // _velocity = velocity;
     }
 
-    private void Awake() {
+    private void Awake()
+    {
+        InitiateFirstStep();
+    }
+
+    private void Start() {
+      
+    }
+
+    private void InitiateFirstStep()
+    {
         RaycastHit hit;
         if (Physics.Raycast(_rayCaster.position, _rayCaster.forward, out hit, Mathf.Infinity, _groundLayer)) {
             //if (Vector3.Distance(_lastPos, hit.point) > _legMoveThreshold) {
@@ -69,11 +79,6 @@ public class LegLocomotorIK : MonoBehaviour {
             _lastVelocityPos = hit.point;
             _targetPos = hit.point;
         }
-    }
-
-    private void Start() {
-        
-        
     }
 
     public void Update() {
