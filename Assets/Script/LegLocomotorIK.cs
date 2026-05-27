@@ -17,6 +17,7 @@ public class LegLocomotorIK : MonoBehaviour {
     [SerializeField] private Transform _rayCaster;
     [SerializeField] private float _raycasterSpringSize =1;
     [SerializeField] private float _raycasterPringSpeed =1;
+    [SerializeField] private Vector3 _raycasterOffset;
     [SerializeField] private AnimationCurve _raycasterSpringMod = AnimationCurve.EaseInOut(0,0,1,1);
     [SerializeField] private Transform _footTarget;
     
@@ -136,7 +137,10 @@ public class LegLocomotorIK : MonoBehaviour {
     }
 
     private void RayCasterPos() {
-        Vector3 targetPos = transform.position + _velocity * _raycasterAmplitudeMode;
+        Vector3 relatifOffset = transform.forward*_raycasterOffset.z;
+        relatifOffset += transform.up*_raycasterOffset.y;
+        relatifOffset += transform.right*_raycasterOffset.x;
+        Vector3 targetPos =relatifOffset+transform.position + _velocity * _raycasterAmplitudeMode;
         float t = Vector3.Distance(targetPos, _rayCaster.position) / _raycasterSpringSize;
         float moveLength = _raycasterPringSpeed * _raycasterSpringMod.Evaluate(t)*Time.deltaTime;
         
